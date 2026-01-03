@@ -61,7 +61,7 @@
             </not>
         </preConditions>
         
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.RemoveDuplicateOfflineSessions" />
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.RemoveDuplicateOfflineSessions" />-->
     </changeSet>
 
     <changeSet author="keycloak" id="3.2.0-fixed">

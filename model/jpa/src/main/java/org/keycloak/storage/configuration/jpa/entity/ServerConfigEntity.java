@@ -37,7 +37,7 @@ public class ServerConfigEntity {
     @Column(name = "SERVER_CONFIG_KEY")
     private String key;
 
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", nullable = false, columnDefinition = "TEXT") // can't set it to NCLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     private String value;
 
     @Version

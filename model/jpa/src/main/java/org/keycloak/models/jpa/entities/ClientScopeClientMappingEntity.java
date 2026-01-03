@@ -52,7 +52,7 @@ public class ClientScopeClientMappingEntity {
     @Column(name="CLIENT_ID")
     protected String clientId;
 
-    @Column(name="DEFAULT_SCOPE")
+    @Column(name="DEFAULT_SCOPE", nullable = false)
     protected boolean defaultScope;
 
     public String getClientScopeId() {

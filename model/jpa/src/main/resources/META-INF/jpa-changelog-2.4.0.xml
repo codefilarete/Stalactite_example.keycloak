@@ -20,7 +20,7 @@
 
      <changeSet author="bburke@redhat.com" id="2.4.0">
          <validCheckSum>7:454d604fbd755d9df3fd9c6329043aa5</validCheckSum>
-         <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.PortLdapUserFedToComponentModel"/>
+<!--         <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.PortLdapUserFedToComponentModel"/>-->
      </changeSet>
 
 </databaseChangeLog>

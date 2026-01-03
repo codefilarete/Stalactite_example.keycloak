@@ -79,9 +79,9 @@ public class UserEntity {
     protected String lastName;
     @Column(name = "EMAIL")
     protected String email;
-    @Column(name = "ENABLED")
+    @Column(name = "ENABLED", nullable = false)
     protected boolean enabled;
-    @Column(name = "EMAIL_VERIFIED")
+    @Column(name = "EMAIL_VERIFIED", nullable = false)
     protected boolean emailVerified;
 
     // This is necessary to be able to dynamically switch unique email constraints on and off in the realm settings
@@ -120,7 +120,7 @@ public class UserEntity {
     @Column(name="SERVICE_ACCOUNT_CLIENT_LINK")
     protected String serviceAccountClientLink;
 
-    @Column(name="NOT_BEFORE")
+    @Column(name="NOT_BEFORE", nullable = false)
     protected int notBefore;
 
     public String getId() {

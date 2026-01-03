@@ -46,14 +46,14 @@ public class OrganizationDomainEntity {
     @Access(AccessType.PROPERTY)
     private String id;
 
-    @Column(name="NAME")
+    @Column(name="NAME", nullable = false)
     protected String name;
 
     @Column(name="VERIFIED")
     protected Boolean verified;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORG_ID")
+    @JoinColumn(name = "ORG_ID", nullable = false)
     private OrganizationEntity organization;
 
     public String getId() {

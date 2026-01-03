@@ -56,19 +56,19 @@ public class FederatedUserConsentEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String id;
 
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", nullable = false)
     protected String userId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", nullable = false, length = 36)
     protected String realmId;
 
-    @Column(name = "STORAGE_PROVIDER_ID")
+    @Column(name = "STORAGE_PROVIDER_ID", length = 36)
     protected String storageProviderId;
 
     @Column(name="CLIENT_ID")
     protected String clientId;
 
-    @Column(name="CLIENT_STORAGE_PROVIDER")
+    @Column(name="CLIENT_STORAGE_PROVIDER", length = 36)
     protected String clientStorageProvider;
 
     @Column(name="EXTERNAL_CLIENT_ID")

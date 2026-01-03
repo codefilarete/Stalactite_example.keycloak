@@ -54,7 +54,7 @@ public class GroupRoleMappingEntity {
     protected GroupEntity group;
 
     @Id
-    @Column(name = "ROLE_ID")
+    @Column(name = "ROLE_ID", length = 36)
     protected String roleId;
 
     public GroupEntity getGroup() {

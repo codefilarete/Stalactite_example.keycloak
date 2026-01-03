@@ -57,16 +57,16 @@ public class AdminEventEntity {
     @Column(name="IP_ADDRESS")
     private String authIpAddress;
 
-    @Column(name="RESOURCE_PATH")
+    @Column(name="RESOURCE_PATH", length = 2550)
     private String resourcePath;
 
-    @Column(name="REPRESENTATION")
+    @Column(name="REPRESENTATION", columnDefinition = "TEXT") // can't set it to TEXT(25500) as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     private String representation;
 
     @Column(name="ERROR")
     private String error;
 
-    @Column(name="DETAILS_JSON")
+    @Column(name="DETAILS_JSON", columnDefinition = "TEXT") // can't set it to NCLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     private String detailsJson;
 
     public String getId() {

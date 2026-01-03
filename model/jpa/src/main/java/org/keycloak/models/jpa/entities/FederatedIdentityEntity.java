@@ -52,7 +52,7 @@ public class FederatedIdentityEntity {
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36)
     protected String realmId;
 
     @Id
@@ -63,7 +63,7 @@ public class FederatedIdentityEntity {
     @Column(name = "FEDERATED_USERNAME")
     protected String userName;
 
-    @Column(name = "TOKEN")
+    @Column(name = "TOKEN", columnDefinition = "TEXT")
     protected String token;
 
     public UserEntity getUser() {

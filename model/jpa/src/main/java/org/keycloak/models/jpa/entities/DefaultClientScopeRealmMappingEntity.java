@@ -46,7 +46,7 @@ import jakarta.persistence.Table;
 public class DefaultClientScopeRealmMappingEntity {
 
     @Id
-    @Column(name = "SCOPE_ID")
+    @Column(name = "SCOPE_ID", length = 36)
     protected String clientScopeId;
 
     @Id
@@ -54,7 +54,7 @@ public class DefaultClientScopeRealmMappingEntity {
     @JoinColumn(name="REALM_ID")
     protected RealmEntity realm;
 
-    @Column(name="DEFAULT_SCOPE")
+    @Column(name="DEFAULT_SCOPE", nullable = false)
     protected boolean defaultScope;
 
     public String getClientScopeId() {

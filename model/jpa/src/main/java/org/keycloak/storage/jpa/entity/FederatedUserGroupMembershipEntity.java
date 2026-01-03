@@ -54,13 +54,13 @@ public class FederatedUserGroupMembershipEntity {
     protected String userId;
 
     @Id
-    @Column(name = "GROUP_ID")
+    @Column(name = "GROUP_ID", length = 36)
     protected String groupId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36, nullable = false)
     protected String realmId;
 
-    @Column(name = "STORAGE_PROVIDER_ID")
+    @Column(name = "STORAGE_PROVIDER_ID", length = 36)
     protected String storageProviderId;
 
     public String getGroupId() {

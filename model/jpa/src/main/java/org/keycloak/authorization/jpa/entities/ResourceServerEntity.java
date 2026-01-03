@@ -37,13 +37,13 @@ public class ResourceServerEntity {
     @Column(name="ID", length = 36)
     private String id;
 
-    @Column(name = "ALLOW_RS_REMOTE_MGMT")
+    @Column(name = "ALLOW_RS_REMOTE_MGMT", nullable = false)
     private boolean allowRemoteResourceManagement;
 
-    @Column(name = "POLICY_ENFORCE_MODE")
+    @Column(name = "POLICY_ENFORCE_MODE", nullable = false)
     private PolicyEnforcementMode policyEnforcementMode = PolicyEnforcementMode.ENFORCING;
 
-    @Column(name = "DECISION_STRATEGY")
+    @Column(name = "DECISION_STRATEGY", nullable = false)
     private DecisionStrategy decisionStrategy = DecisionStrategy.UNANIMOUS;
 
     public String getId() {

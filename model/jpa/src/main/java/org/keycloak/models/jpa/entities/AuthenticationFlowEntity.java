@@ -52,17 +52,17 @@ public class AuthenticationFlowEntity {
     @Column(name="ALIAS")
     protected String alias;
 
-    @Column(name="PROVIDER_ID")
+    @Column(name="PROVIDER_ID", length = 36, nullable = false)
     protected String providerId;
 
     @Nationalized
     @Column(name="DESCRIPTION")
     protected String description;
 
-    @Column(name="TOP_LEVEL")
+    @Column(name="TOP_LEVEL", nullable = false)
     protected boolean topLevel;
 
-    @Column(name="BUILT_IN")
+    @Column(name="BUILT_IN", nullable = false)
     protected boolean builtIn;
 
 

@@ -17,9 +17,9 @@
   -->
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet author="keycloak" id="24.0.2-27228">
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate24_0_2_FederatedTermsAndConditionsRequiredAction"/>
-    </changeSet>
+<!--    <changeSet author="keycloak" id="24.0.2-27228">-->
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate24_0_2_FederatedTermsAndConditionsRequiredAction"/>-->
+<!--    </changeSet>-->
 
     <changeSet author="keycloak" id="24.0.2-27967-drop-index-if-present">
         <preConditions onSqlOutput="TEST" onFail="MARK_RAN">

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ * Copyright 2023 Red Hat, Inc. and/or its affiliates
+  ~ * and other contributors as indicated by the @author tags.
+  ~ *
+  ~ * Licensed under the Apache License, Version 2.0 (the "License");
+  ~ * you may not use this file except in compliance with the License.
+  ~ * You may obtain a copy of the License at
+  ~ *
+  ~ * http://www.apache.org/licenses/LICENSE-2.0
+  ~ *
+  ~ * Unless required by applicable law or agreed to in writing, software
+  ~ * distributed under the License is distributed on an "AS IS" BASIS,
+  ~ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ * See the License for the specific language governing permissions and
+  ~ * limitations under the License.
+  -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="guiom.mary" id="26.5.0-JPA-alignment">
+
+        <modifyDataType tableName="AUTHENTICATION_EXECUTION"
+                        columnName="AUTH_CONFIG"
+                        newDataType="VARCHAR(255)"/>
+        <modifyDataType tableName="AUTHENTICATION_EXECUTION"
+                        columnName="AUTHENTICATOR"
+                        newDataType="VARCHAR(255)"/>
+
+        <modifyDataType tableName="AUTHENTICATION_EXECUTION"
+                        columnName="REQUIREMENT"
+                        newDataType="SMALLINT"/>
+
+        <modifyDataType tableName="CLIENT_AUTH_FLOW_BINDINGS"
+                        columnName="FLOW_ID"
+                        newDataType="VARCHAR(4000)"/>
+
+        <!-- To align with hack in RoleEntity -->
+        <modifyDataType tableName="KEYCLOAK_ROLE"
+                        columnName="CLIENT_REALM_CONSTRAINT"
+                        newDataType="VARCHAR(36)"/>
+
+        <modifyDataType tableName="OFFLINE_CLIENT_SESSION"
+                        columnName="CLIENT_ID"
+                        newDataType="VARCHAR(36)"/>
+
+        <modifyDataType tableName="ORG"
+                        columnName="ID"
+                        newDataType="VARCHAR(36)"/>
+
+        <modifyDataType tableName="ORG_DOMAIN"
+                        columnName="ORG_ID"
+                        newDataType="VARCHAR(36)"/>
+        <!-- In OrganizationDomainEntity "verified" field is a boxed Boolean -->
+        <dropNotNullConstraint tableName="ORG_DOMAIN" columnName="VERIFIED"/>
+
+        <modifyDataType tableName="REALM_LOCALIZATIONS"
+                        columnName="REALM_ID"
+                        newDataType="VARCHAR(36)"/>
+
+        <modifyDataType tableName="REVOKED_TOKEN"
+                        columnName="ID"
+                        newDataType="VARCHAR(36)"/>
+
+        <!-- Superfluous columns added in Liquibase scripts that don't appear in Java code in the whole project (except if I'm wrong) -->
+        <dropColumn tableName="AUTHENTICATION_EXECUTION" columnName="ALIAS"/>
+        <dropColumn tableName="KEYCLOAK_ROLE" columnName="REALM"/>
+        <dropColumn tableName="REALM" columnName="SOCIAL"/>
+        <dropColumn tableName="REALM" columnName="UPDATE_PROFILE_ON_SOC_LOGIN"/>
+    </changeSet>
+
+</databaseChangeLog>

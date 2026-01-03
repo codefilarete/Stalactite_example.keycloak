@@ -44,9 +44,9 @@ public class RequiredCredentialEntity {
     @Id
     @Column(name = "TYPE")
     protected String type;
-    @Column(name = "INPUT")
+    @Column(name = "INPUT", nullable = false)
     protected boolean input;
-    @Column(name = "SECRET")
+    @Column(name = "SECRET", nullable = false)
     protected boolean secret;
     @Column(name = "FORM_LABEL")
     protected String formLabel;

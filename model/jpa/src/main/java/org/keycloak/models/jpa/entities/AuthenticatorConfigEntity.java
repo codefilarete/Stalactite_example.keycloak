@@ -53,7 +53,7 @@ public class AuthenticatorConfigEntity {
 
     @ElementCollection
     @MapKeyColumn(name="NAME")
-    @Column(name="VALUE")
+    @Column(name="VALUE", columnDefinition = "TEXT") // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     @CollectionTable(
       name="AUTHENTICATOR_CONFIG_ENTRY",
       joinColumns={ @JoinColumn(name="AUTHENTICATOR_ID") },

@@ -54,10 +54,10 @@ public class ComponentEntity {
     @Column(name="PROVIDER_TYPE")
     protected String providerType;
 
-    @Column(name="PROVIDER_ID")
+    @Column(name="PROVIDER_ID", length = 36)
     protected String providerId;
 
-    @Column(name="PARENT_ID")
+    @Column(name="PARENT_ID", length = 36)
     protected String parentId;
 
     @Column(name="SUB_TYPE")

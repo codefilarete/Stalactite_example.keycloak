@@ -53,7 +53,7 @@ public class UserConsentClientScopeEntity {
     protected UserConsentEntity userConsent;
 
     @Id
-    @Column(name="SCOPE_ID")
+    @Column(name="SCOPE_ID", length = 36)
     protected String scopeId;
 
     public UserConsentEntity getUserConsent() {

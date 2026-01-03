@@ -60,7 +60,7 @@ public class AuthenticationExecutionEntity {
     @Column(name="AUTH_CONFIG")
     protected String authenticatorConfig;
 
-    @Column(name="AUTH_FLOW_ID")
+    @Column(name="AUTH_FLOW_ID", length = 36)
     protected String flowId;
 
     @Column(name="REQUIREMENT")
@@ -69,7 +69,7 @@ public class AuthenticationExecutionEntity {
     @Column(name="PRIORITY")
     protected int priority;
 
-    @Column(name="AUTHENTICATOR_FLOW")
+    @Column(name="AUTHENTICATOR_FLOW", nullable = false)
     private boolean autheticatorFlow;
 
     public String getId() {

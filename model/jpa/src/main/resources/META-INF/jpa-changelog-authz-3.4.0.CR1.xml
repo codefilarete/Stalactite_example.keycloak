@@ -39,7 +39,7 @@
             </not>
         </preConditions>
 
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdateAuthz_3_4_0_CR1" />
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdateAuthz_3_4_0_CR1" />-->
     </changeSet>
 
     <changeSet author="glavoie@gmail.com" id="authz-3.4.0.CR1-resource-server-pk-change-part3-fixed">

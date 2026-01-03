@@ -44,10 +44,10 @@ public class ResourceAttributeEntity {
     private String id;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "RESOURCE_ID")
+    @JoinColumn(name = "RESOURCE_ID", nullable = false)
     private ResourceEntity resource;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
     @Column(name = "VALUE")
     private String value;

@@ -77,14 +77,14 @@ public class PolicyEntity {
     // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     private String id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Nationalized
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "TYPE")
+    @Column(name = "TYPE", nullable = false)
     private String type;
 
     @Column(name = "DECISION_STRATEGY")

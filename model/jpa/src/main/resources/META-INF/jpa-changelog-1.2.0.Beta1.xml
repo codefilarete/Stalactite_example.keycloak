@@ -176,7 +176,7 @@
         <addForeignKeyConstraint baseColumnNames="APPLICATION_ID" baseTableName="REALM_APPLICATION" constraintName="FK_82S3P0DIUXAWWQQSA528UBY2Q" referencedColumnNames="ID" referencedTableName="CLIENT"/>
         <addForeignKeyConstraint baseColumnNames="REALM_ID" baseTableName="REALM_APPLICATION" constraintName="FK_M6QGA3RFME47335JY8JXYXH3I" referencedColumnNames="ID" referencedTableName="REALM"/>
 
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate1_2_0_Beta1"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate1_2_0_Beta1"/>-->
 
         <!-- Remove obsolete 'social' and 'claims' stuff -->
         <dropForeignKeyConstraint baseTableName="USER_SOCIAL_LINK" constraintName="FK_68CJYS5UWM55UY823Y75XG4OM" />

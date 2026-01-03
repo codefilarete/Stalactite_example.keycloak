@@ -72,19 +72,19 @@ public class PersistentUserSessionEntity {
     @Column(name="USER_SESSION_ID", length = 36)
     protected String userSessionId;
 
-    @Column(name = "REALM_ID", length = 36)
+    @Column(name = "REALM_ID", length = 36, nullable = false)
     protected String realmId;
 
-    @Column(name="USER_ID", length = 255)
+    @Column(name="USER_ID", length = 255, nullable = false)
     protected String userId;
 
-    @Column(name = "CREATED_ON")
+    @Column(name = "CREATED_ON", nullable = false)
     protected int createdOn;
 
-    @Column(name = "LAST_SESSION_REFRESH")
+    @Column(name = "LAST_SESSION_REFRESH", nullable = false)
     protected int lastSessionRefresh;
 
-    @Column(name = "BROKER_SESSION_ID")
+    @Column(name = "BROKER_SESSION_ID", length = 1024)
     protected String brokerSessionId;
 
     @Version
@@ -92,10 +92,10 @@ public class PersistentUserSessionEntity {
     private int version;
 
     @Id
-    @Column(name = "OFFLINE_FLAG")
+    @Column(name = "OFFLINE_FLAG", nullable = false, length = 4)
     protected String offline;
 
-    @Column(name="DATA")
+    @Column(name="DATA", columnDefinition = "TEXT") // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     protected String data;
 
     public String getUserSessionId() {

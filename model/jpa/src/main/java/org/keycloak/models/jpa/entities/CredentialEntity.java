@@ -61,10 +61,10 @@ public class CredentialEntity {
     @JoinColumn(name="USER_ID")
     protected UserEntity user;
 
-    @Column(name="SECRET_DATA")
+    @Column(name="SECRET_DATA", columnDefinition = "TEXT")
     protected String secretData;
 
-    @Column(name="CREDENTIAL_DATA")
+    @Column(name="CREDENTIAL_DATA", columnDefinition = "TEXT")
     protected String credentialData;
 
     @Column(name="PRIORITY")

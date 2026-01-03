@@ -76,14 +76,14 @@ public class ResourceEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     private String id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Column(name = "DISPLAY_NAME")
     private String displayName;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", nullable = false)
     @CollectionTable(name = "RESOURCE_URIS", joinColumns = { @JoinColumn(name="RESOURCE_ID") })
     private Set<String> uris;
 
@@ -93,13 +93,13 @@ public class ResourceEntity {
     @Column(name = "ICON_URI")
     private String iconUri;
 
-    @Column(name = "OWNER")
+    @Column(name = "OWNER", nullable = false)
     private String owner;
 
-    @Column(name = "OWNER_MANAGED_ACCESS")
+    @Column(name = "OWNER_MANAGED_ACCESS", nullable = false)
     private boolean ownerManagedAccess;
 
-    @Column(name = "RESOURCE_SERVER_ID")
+    @Column(name = "RESOURCE_SERVER_ID", nullable = false, length = 36)
     private String resourceServer;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {})

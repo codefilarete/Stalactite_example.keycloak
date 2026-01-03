@@ -47,10 +47,10 @@ public class RoleAttributeEntity {
     protected String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROLE_ID")
+    @JoinColumn(name = "ROLE_ID", nullable = false)
     protected RoleEntity role;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     protected String name;
 
     @Nationalized

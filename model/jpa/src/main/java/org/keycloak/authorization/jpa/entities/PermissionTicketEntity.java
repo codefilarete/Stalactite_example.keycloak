@@ -55,13 +55,13 @@ public class PermissionTicketEntity {
     // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     private String id;
 
-    @Column(name = "OWNER")
+    @Column(name = "OWNER", nullable = false)
     private String owner;
 
-    @Column(name = "REQUESTER")
+    @Column(name = "REQUESTER", nullable = false)
     private String requester;
 
-    @Column(name = "CREATED_TIMESTAMP")
+    @Column(name = "CREATED_TIMESTAMP", nullable = false)
     private Long createdTimestamp;
 
     @Column(name = "GRANTED_TIMESTAMP")

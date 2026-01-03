@@ -51,25 +51,25 @@ public class OrganizationEntity {
     @Access(AccessType.PROPERTY)
     private String id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "ALIAS")
+    @Column(name = "ALIAS", nullable = false)
     private String alias;
 
-    @Column(name = "ENABLED")
+    @Column(name = "ENABLED", nullable = false)
     private boolean enabled;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", length = 4000)
     private String description;
 
-    @Column(name = "REDIRECT_URL")
+    @Column(name = "REDIRECT_URL", length = 2048)
     private String redirectUrl;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", nullable = false)
     private String realmId;
 
-    @Column(name = "GROUP_ID")
+    @Column(name = "GROUP_ID", nullable = false)
     private String groupId;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="organization")

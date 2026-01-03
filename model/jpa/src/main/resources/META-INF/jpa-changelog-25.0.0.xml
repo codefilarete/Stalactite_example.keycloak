@@ -138,7 +138,7 @@
         <preConditions onSqlOutput="TEST" onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate25_0_0_ConsentConstraints"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate25_0_0_ConsentConstraints"/>-->
         <dropUniqueConstraint tableName="USER_CONSENT" constraintName="UK_JKUWUVD56ONTGSUHOGM8UEWRT"/>
         <addUniqueConstraint columnNames="CLIENT_ID, USER_ID" constraintName="UK_LOCAL_CONSENT" tableName="USER_CONSENT"/>
         <addUniqueConstraint columnNames="CLIENT_STORAGE_PROVIDER, EXTERNAL_CLIENT_ID, USER_ID" constraintName="UK_EXTERNAL_CONSENT" tableName="USER_CONSENT"/>
@@ -150,7 +150,7 @@
             <changeSetExecuted id="unique-consentuser" author="keycloak" changeLogFile="META-INF/jpa-changelog-25.0.0.xml" />
             <uniqueConstraintExists tableName="USER_CONSENT" constraintName="UK_JKUWUVD56ONTGSUHOGM8UEWRT"/>
         </preConditions>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate25_0_0_ConsentConstraints"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate25_0_0_ConsentConstraints"/>-->
         <dropUniqueConstraint tableName="USER_CONSENT" constraintName="UK_JKUWUVD56ONTGSUHOGM8UEWRT"/>
         <addUniqueConstraint columnNames="CLIENT_ID, USER_ID" constraintName="UK_LOCAL_CONSENT" tableName="USER_CONSENT"/>
         <addUniqueConstraint columnNames="CLIENT_STORAGE_PROVIDER, EXTERNAL_CLIENT_ID, USER_ID" constraintName="UK_EXTERNAL_CONSENT" tableName="USER_CONSENT"/>
@@ -163,7 +163,7 @@
                 <dbms type="mariadb"/>
             </or>
         </preConditions>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate25_0_0_MySQL_ConsentConstraints"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate25_0_0_MySQL_ConsentConstraints"/>-->
         <dropUniqueConstraint tableName="USER_CONSENT" constraintName="UK_JKUWUVD56ONTGSUHOGM8UEWRT"/>
         <addUniqueConstraint columnNames="CLIENT_ID, USER_ID" constraintName="UK_LOCAL_CONSENT" tableName="USER_CONSENT"/>
         <addUniqueConstraint columnNames="CLIENT_STORAGE_PROVIDER, EXTERNAL_CLIENT_ID, USER_ID" constraintName="UK_EXTERNAL_CONSENT" tableName="USER_CONSENT"/>

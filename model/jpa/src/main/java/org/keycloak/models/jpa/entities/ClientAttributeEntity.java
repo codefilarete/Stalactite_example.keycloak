@@ -49,7 +49,7 @@ public class ClientAttributeEntity {
     protected String name;
 
     @Nationalized
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", columnDefinition = "TEXT")
     protected String value;
 
     public ClientEntity getClient() {

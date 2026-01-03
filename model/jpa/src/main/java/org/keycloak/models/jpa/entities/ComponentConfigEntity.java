@@ -43,13 +43,13 @@ public class ComponentConfigEntity {
     protected String id;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "COMPONENT_ID")
+    @JoinColumn(name = "COMPONENT_ID", nullable = false)
     protected ComponentEntity component;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     protected String name;
     @Nationalized
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", columnDefinition = "TEXT")
     protected String value;
 
     public String getId() {

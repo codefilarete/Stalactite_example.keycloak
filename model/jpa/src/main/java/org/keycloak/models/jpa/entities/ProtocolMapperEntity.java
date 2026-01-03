@@ -44,17 +44,17 @@ public class ProtocolMapperEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String id;
 
-    @Column(name="NAME")
+    @Column(name="NAME", nullable = false)
     protected String name;
 
-    @Column(name = "PROTOCOL")
+    @Column(name = "PROTOCOL", nullable = false)
     protected String protocol;
-    @Column(name = "PROTOCOL_MAPPER_NAME")
+    @Column(name = "PROTOCOL_MAPPER_NAME", nullable = false)
     protected String protocolMapper;
 
     @ElementCollection
     @MapKeyColumn(name="NAME")
-    @Column(name="VALUE")
+    @Column(name="VALUE", columnDefinition = "TEXT") // can't set it to NCLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     @CollectionTable(name="PROTOCOL_MAPPER_CONFIG", joinColumns={ @JoinColumn(name="PROTOCOL_MAPPER_ID") })
     private Map<String, String> config;
 

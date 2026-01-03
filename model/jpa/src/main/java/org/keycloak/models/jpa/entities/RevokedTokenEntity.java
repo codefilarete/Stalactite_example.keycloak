@@ -45,7 +45,7 @@ public class RevokedTokenEntity {
     /**
      * Expire time in seconds.
      */
-    @Column(name="EXPIRE")
+    @Column(name="EXPIRE", nullable = false)
     protected long expire;
 
     public long getExpire() {

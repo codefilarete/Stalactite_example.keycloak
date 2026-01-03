@@ -60,10 +60,10 @@ public class RequiredActionProviderEntity {
     @Column(name="PROVIDER_ID")
     protected String providerId;
 
-    @Column(name="ENABLED")
+    @Column(name="ENABLED", nullable = false)
     protected boolean enabled;
 
-    @Column(name="DEFAULT_ACTION")
+    @Column(name="DEFAULT_ACTION", nullable = false)
     protected boolean defaultAction;
 
     @Column(name="PRIORITY")
@@ -71,7 +71,7 @@ public class RequiredActionProviderEntity {
 
     @ElementCollection
     @MapKeyColumn(name="NAME")
-    @Column(name="VALUE")
+    @Column(name="VALUE", columnDefinition = "TEXT") // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     @CollectionTable(name="REQUIRED_ACTION_CONFIG", joinColumns={ @JoinColumn(name="REQUIRED_ACTION_ID") })
     private Map<String, String> config;
 

@@ -171,7 +171,7 @@
         <addForeignKeyConstraint baseColumnNames="CLIENT_ID" baseTableName="CLIENT_SCOPE_CLIENT" constraintName="FK_C_CLI_SCOPE_CLIENT" referencedColumnNames="ID" referencedTableName="CLIENT"/>
         <addForeignKeyConstraint baseColumnNames="SCOPE_ID" baseTableName="CLIENT_SCOPE_CLIENT" constraintName="FK_C_CLI_SCOPE_SCOPE" referencedColumnNames="ID" referencedTableName="CLIENT_SCOPE"/>
 
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate4_0_0_DefaultClientScopes" />
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate4_0_0_DefaultClientScopes" />-->
 
         <dropColumn tableName="CLIENT" columnName="CLIENT_TEMPLATE_ID" />
         <dropDefaultValue tableName="CLIENT" columnName="USE_TEMPLATE_CONFIG"/>

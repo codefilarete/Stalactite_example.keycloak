@@ -36,7 +36,7 @@
             <column name="TYPE" valueNumeric="0" type="INT"/>
         </update>
         <addNotNullConstraint tableName="KEYCLOAK_GROUP" columnName="TYPE" columnDataType="INT"/>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate26_0_0_OrganizationGroupType"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate26_0_0_OrganizationGroupType"/>-->
     </changeSet>
 
     <changeSet author="keycloak" id="26.0.0-org-indexes">
@@ -90,7 +90,7 @@
             <column name="HIDE_ON_LOGIN"/>
             <column name="ORGANIZATION_ID"/>
         </createIndex>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate26_0_0_IdentityProviderAttributesMigration"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate26_0_0_IdentityProviderAttributesMigration"/>-->
         <modifySql dbms="mssql">
             <replace replace="DEFAULT 0" with="DEFAULT 0 WITH VALUES" />
         </modifySql>

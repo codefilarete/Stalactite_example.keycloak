@@ -55,7 +55,7 @@ public class BrokerLinkEntity {
     @Column(name = "IDENTITY_PROVIDER")
     protected String identityProvider;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36, nullable = false)
     protected String realmId;
 
     @Column(name = "STORAGE_PROVIDER_ID")
@@ -66,7 +66,7 @@ public class BrokerLinkEntity {
     @Column(name = "BROKER_USERNAME")
     protected String brokerUserName;
 
-    @Column(name = "TOKEN")
+    @Column(name = "TOKEN", columnDefinition = "TEXT")
     protected String token;
 
     public String getUserId() {

@@ -46,9 +46,9 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="keycloak" id="24.0.0-9758-2">
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.FederatedUserAttributeTextColumnMigration" />
-    </changeSet>
+<!--    <changeSet author="keycloak" id="24.0.0-9758-2">-->
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.FederatedUserAttributeTextColumnMigration" />-->
+<!--    </changeSet>-->
 
     <changeSet author="keycloak" id="24.0.0-26618-drop-index-if-present">
         <preConditions onSqlOutput="TEST" onFail="MARK_RAN">

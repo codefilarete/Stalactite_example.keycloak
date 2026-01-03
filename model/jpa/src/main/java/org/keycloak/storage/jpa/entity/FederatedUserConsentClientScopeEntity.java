@@ -53,7 +53,7 @@ public class FederatedUserConsentClientScopeEntity {
     protected FederatedUserConsentEntity userConsent;
 
     @Id
-    @Column(name="SCOPE_ID")
+    @Column(name="SCOPE_ID", length = 36)
     protected String scopeId;
 
     public FederatedUserConsentEntity getUserConsent() {

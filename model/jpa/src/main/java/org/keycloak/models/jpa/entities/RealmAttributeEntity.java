@@ -53,7 +53,7 @@ public class RealmAttributeEntity {
     @Column(name = "NAME")
     protected String name;
     @Nationalized
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", columnDefinition = "TEXT")
     protected String value;
 
     public String getName() {

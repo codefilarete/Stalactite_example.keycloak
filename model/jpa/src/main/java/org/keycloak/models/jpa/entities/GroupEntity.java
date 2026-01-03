@@ -55,13 +55,13 @@ public class GroupEntity {
     @Column(name = "DESCRIPTION")
     protected String description;
 
-    @Column(name = "PARENT_GROUP")
+    @Column(name = "PARENT_GROUP", length = 36, nullable = false)
     private String parentId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36)
     private String realm;
 
-    @Column(name = "TYPE")
+    @Column(name = "TYPE", nullable = false)
     private int type;
 
     @OneToMany(

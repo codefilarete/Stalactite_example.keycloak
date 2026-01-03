@@ -84,10 +84,10 @@ public class RoleEntity {
     @Column(name = "REALM_ID")
     private String realmId;
 
-    @Column(name="CLIENT_ROLE")
+    @Column(name="CLIENT_ROLE", nullable = false)
     private boolean clientRole;
 
-    @Column(name="CLIENT")
+    @Column(name="CLIENT", length = 36)
     private String clientId;
 
     // Hack to ensure that either name+client or name+realm are unique. Needed due to MS-SQL as it don't allow multiple NULL values in the column, which is part of constraint

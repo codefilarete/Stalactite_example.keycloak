@@ -39,7 +39,7 @@
         </addColumn>
 
         <!--Update "lastSessionRefresh" to the current time when migrating from previous version-->
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate4_7_0_OfflineSessionsTimestamps"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate4_7_0_OfflineSessionsTimestamps"/>-->
 
         <createIndex indexName="IDX_OFFLINE_USS_CREATEDON" tableName="OFFLINE_USER_SESSION">
             <column name="CREATED_ON" type="INT"/>

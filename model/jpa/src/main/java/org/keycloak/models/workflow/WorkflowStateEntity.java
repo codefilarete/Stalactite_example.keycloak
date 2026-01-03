@@ -36,10 +36,10 @@ public class WorkflowStateEntity {
     @Column(name = "EXECUTION_ID")
     private String executionId;
 
-    @Column(name = "RESOURCE_ID")
+    @Column(name = "RESOURCE_ID", nullable = false)
     private String resourceId;
 
-    @Column(name = "WORKFLOW_ID")
+    @Column(name = "WORKFLOW_ID", nullable = false)
     private String workflowId;
 
     @Column(name = "RESOURCE_TYPE")

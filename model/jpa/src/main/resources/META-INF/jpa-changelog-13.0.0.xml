@@ -23,7 +23,7 @@
             <column name="DEFAULT_ROLE" type="VARCHAR(255)"/>
         </addColumn>
 
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate13_0_0_MigrateDefaultRoles" />
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate13_0_0_MigrateDefaultRoles" />-->
     </changeSet>
 
     <changeSet author="keycloak" id="default-roles-cleanup">

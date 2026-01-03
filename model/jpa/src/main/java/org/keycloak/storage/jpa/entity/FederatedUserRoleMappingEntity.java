@@ -52,13 +52,13 @@ public class FederatedUserRoleMappingEntity {
     protected String userId;
 
     @Id
-    @Column(name = "ROLE_ID")
+    @Column(name = "ROLE_ID", length = 36)
     protected String roleId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", nullable = false, length = 36)
     protected String realmId;
 
-    @Column(name = "STORAGE_PROVIDER_ID")
+    @Column(name = "STORAGE_PROVIDER_ID", length = 36)
     protected String storageProviderId;
 
     public String getUserId() {

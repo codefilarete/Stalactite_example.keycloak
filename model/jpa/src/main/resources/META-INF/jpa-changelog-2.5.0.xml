@@ -20,7 +20,7 @@
 
      <changeSet author="bburke@redhat.com" id="2.5.0">
          <validCheckSum>7:57e98a3077e29caf562f7dbf80c72600</validCheckSum>
-         <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.MigrateUserFedToComponent"/>
+<!--         <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.MigrateUserFedToComponent"/>-->
 
          <modifyDataType tableName="OFFLINE_USER_SESSION" columnName="USER_ID" newDataType="VARCHAR(255)"/>
      </changeSet>

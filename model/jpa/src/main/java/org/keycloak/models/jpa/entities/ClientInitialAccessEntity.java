@@ -60,7 +60,7 @@ public class ClientInitialAccessEntity {
     private int remainingCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "REALM_ID")
+    @JoinColumn(name = "REALM_ID", nullable = false)
     protected RealmEntity realm;
 
     public String getId() {

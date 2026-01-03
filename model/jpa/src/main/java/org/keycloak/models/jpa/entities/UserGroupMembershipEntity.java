@@ -54,10 +54,10 @@ public class UserGroupMembershipEntity {
     protected UserEntity user;
 
     @Id
-    @Column(name = "GROUP_ID")
+    @Column(name = "GROUP_ID", length = 36)
     protected String groupId;
 
-    @Column(name = "MEMBERSHIP_TYPE")
+    @Column(name = "MEMBERSHIP_TYPE", nullable = false)
     private String membershipType;
 
     public UserEntity getUser() {

@@ -65,7 +65,7 @@ public class ClientScopeEntity {
     @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "clientScope")
     Collection<ProtocolMapperEntity> protocolMappers = new LinkedList<>();
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36)
     protected String realmId;
 
     @Column(name="PROTOCOL")

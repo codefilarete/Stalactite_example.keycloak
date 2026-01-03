@@ -51,18 +51,18 @@ public class FederatedUserAttributeEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String id;
 
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", nullable = false)
     protected String userId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36, nullable = false)
     protected String realmId;
 
-    @Column(name = "STORAGE_PROVIDER_ID")
+    @Column(name = "STORAGE_PROVIDER_ID", length = 36)
     protected String storageProviderId;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     protected String name;
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", columnDefinition = "VARCHAR(2024)")
     protected String value;
 
     @Column(name = "LONG_VALUE_HASH")
@@ -70,7 +70,7 @@ public class FederatedUserAttributeEntity {
     @Column(name = "LONG_VALUE_HASH_LOWER_CASE")
     private byte[] longValueHashLowerCase;
     @Nationalized
-    @Column(name = "LONG_VALUE")
+    @Column(name = "LONG_VALUE", columnDefinition = "TEXT")
     private String longValue;
 
     public String getId() {

@@ -82,7 +82,7 @@ public class RealmLocalizationTextsEntity {
     private String locale;
 
     @Nationalized
-    @Column(name = "TEXTS")
+    @Column(name = "TEXTS", columnDefinition = "TEXT", nullable = false) // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     @Convert(converter = MapStringConverter.class)
     private Map<String,String> texts;
 

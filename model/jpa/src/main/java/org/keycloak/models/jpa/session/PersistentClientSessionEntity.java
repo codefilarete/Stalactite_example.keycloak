@@ -81,10 +81,10 @@ public class PersistentClientSessionEntity {
     private int version;
 
     @Id
-    @Column(name = "OFFLINE_FLAG")
+    @Column(name = "OFFLINE_FLAG", length = 4)
     protected String offline;
 
-    @Column(name="DATA")
+    @Column(name="DATA", columnDefinition = "TEXT") // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     protected String data;
 
     public String getUserSessionId() {

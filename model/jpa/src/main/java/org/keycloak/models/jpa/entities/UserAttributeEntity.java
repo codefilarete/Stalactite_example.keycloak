@@ -52,10 +52,10 @@ public class UserAttributeEntity {
     protected String id;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false)
     protected UserEntity user;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     protected String name;
     @Nationalized
     @Column(name = "VALUE")
@@ -66,7 +66,7 @@ public class UserAttributeEntity {
     @Column(name = "LONG_VALUE_HASH_LOWER_CASE")
     private byte[] longValueHashLowerCase;
     @Nationalized
-    @Column(name = "LONG_VALUE")
+    @Column(name = "LONG_VALUE", columnDefinition = "TEXT")	// can't set it to NCLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     private String longValue;
 
     public String getId() {

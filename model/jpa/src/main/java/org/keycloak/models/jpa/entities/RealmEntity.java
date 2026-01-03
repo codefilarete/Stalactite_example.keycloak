@@ -62,31 +62,31 @@ public class RealmEntity {
     @Column(name="NAME", unique = true)
     protected String name;
 
-    @Column(name="ENABLED")
+    @Column(name="ENABLED", nullable = false)
     protected boolean enabled;
     @Column(name="SSL_REQUIRED")
     protected String sslRequired;
-    @Column(name="REGISTRATION_ALLOWED")
+    @Column(name="REGISTRATION_ALLOWED", nullable = false)
     protected boolean registrationAllowed;
-    @Column(name = "REG_EMAIL_AS_USERNAME")
+    @Column(name = "REG_EMAIL_AS_USERNAME", nullable = false)
     protected boolean registrationEmailAsUsername;
-    @Column(name="VERIFY_EMAIL")
+    @Column(name="VERIFY_EMAIL", nullable = false)
     protected boolean verifyEmail;
-    @Column(name="RESET_PASSWORD_ALLOWED")
+    @Column(name="RESET_PASSWORD_ALLOWED", nullable = false)
     protected boolean resetPasswordAllowed;
-    @Column(name="LOGIN_WITH_EMAIL_ALLOWED")
+    @Column(name="LOGIN_WITH_EMAIL_ALLOWED", nullable = false)
     protected boolean loginWithEmailAllowed;
-    @Column(name="DUPLICATE_EMAILS_ALLOWED")
+    @Column(name="DUPLICATE_EMAILS_ALLOWED", nullable = false)
     protected boolean duplicateEmailsAllowed;
-    @Column(name="REMEMBER_ME")
+    @Column(name="REMEMBER_ME", nullable = false)
     protected boolean rememberMe;
 
-    @Column(name="PASSWORD_POLICY")
+    @Column(name="PASSWORD_POLICY", length = 2550)
     protected String passwordPolicy;
 
-    @Column(name="OTP_POLICY_TYPE")
+    @Column(name="OTP_POLICY_TYPE", length = 36)
     protected String otpPolicyType;
-    @Column(name="OTP_POLICY_ALG")
+    @Column(name="OTP_POLICY_ALG", length = 36)
     protected String otpPolicyAlgorithm;
     @Column(name="OTP_POLICY_COUNTER")
     protected int otpPolicyInitialCounter;
@@ -98,10 +98,10 @@ public class RealmEntity {
     protected int otpPolicyPeriod;
 
 
-    @Column(name="EDIT_USERNAME_ALLOWED")
+    @Column(name="EDIT_USERNAME_ALLOWED", nullable = false)
     protected boolean editUsernameAllowed;
 
-    @Column(name="REVOKE_REFRESH_TOKEN")
+    @Column(name="REVOKE_REFRESH_TOKEN", nullable = false)
     private boolean revokeRefreshToken;
     @Column(name="REFRESH_TOKEN_MAX_REUSE")
     private int refreshTokenMaxReuse;
@@ -109,9 +109,9 @@ public class RealmEntity {
     private int ssoSessionIdleTimeout;
     @Column(name="SSO_MAX_LIFESPAN")
     private int ssoSessionMaxLifespan;
-    @Column(name="SSO_IDLE_TIMEOUT_REMEMBER_ME")
+    @Column(name="SSO_IDLE_TIMEOUT_REMEMBER_ME", nullable = false)
     private int ssoSessionIdleTimeoutRememberMe;
-    @Column(name="SSO_MAX_LIFESPAN_REMEMBER_ME")
+    @Column(name="SSO_MAX_LIFESPAN_REMEMBER_ME", nullable = false)
     private int ssoSessionMaxLifespanRememberMe;
     @Column(name="OFFLINE_SESSION_IDLE_TIMEOUT")
     private int offlineSessionIdleTimeout;
@@ -156,32 +156,32 @@ public class RealmEntity {
     protected Map<String, String> smtpConfig;
 
     @ElementCollection
-    @Column(name="GROUP_ID")
+    @Column(name="GROUP_ID", nullable = false, length = 36)
     @CollectionTable(name="REALM_DEFAULT_GROUPS", joinColumns={ @JoinColumn(name="REALM_ID") })
     protected Set<String> defaultGroupIds;
 
-    @Column(name="EVENTS_ENABLED")
+    @Column(name="EVENTS_ENABLED", nullable = false)
     protected boolean eventsEnabled;
     @Column(name="EVENTS_EXPIRATION")
     protected long eventsExpiration;
 
     @ElementCollection
-    @Column(name="VALUE")
+    @Column(name="VALUE", nullable = false)
     @CollectionTable(name="REALM_EVENTS_LISTENERS", joinColumns={ @JoinColumn(name="REALM_ID") })
     protected Set<String> eventsListeners;
 
     @ElementCollection
-    @Column(name="VALUE")
+    @Column(name="VALUE", nullable = false)
     @CollectionTable(name="REALM_ENABLED_EVENT_TYPES", joinColumns={ @JoinColumn(name="REALM_ID") })
     protected Set<String> enabledEventTypes;
 
-    @Column(name="ADMIN_EVENTS_ENABLED")
+    @Column(name="ADMIN_EVENTS_ENABLED", nullable = false)
     protected boolean adminEventsEnabled;
 
-    @Column(name="ADMIN_EVENTS_DETAILS_ENABLED")
+    @Column(name="ADMIN_EVENTS_DETAILS_ENABLED", nullable = false)
     protected boolean adminEventsDetailsEnabled;
 
-    @Column(name="MASTER_ADMIN_CLIENT")
+    @Column(name="MASTER_ADMIN_CLIENT", length = 36)
     protected String masterAdminClient;
 
     @Column(name="DEFAULT_ROLE")
@@ -199,37 +199,37 @@ public class RealmEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade ={CascadeType.ALL}, orphanRemoval = true, mappedBy = "realm")
     Set<ComponentEntity> components = new HashSet<>();
 
-    @Column(name="BROWSER_FLOW")
+    @Column(name="BROWSER_FLOW", length = 36)
     protected String browserFlow;
 
-    @Column(name="REGISTRATION_FLOW")
+    @Column(name="REGISTRATION_FLOW", length = 36)
     protected String registrationFlow;
 
 
-    @Column(name="DIRECT_GRANT_FLOW")
+    @Column(name="DIRECT_GRANT_FLOW", length = 36)
     protected String directGrantFlow;
-    @Column(name="RESET_CREDENTIALS_FLOW")
+    @Column(name="RESET_CREDENTIALS_FLOW", length = 36)
     protected String resetCredentialsFlow;
 
-    @Column(name="CLIENT_AUTH_FLOW")
+    @Column(name="CLIENT_AUTH_FLOW", length = 36)
     protected String clientAuthenticationFlow;
 
-    @Column(name="DOCKER_AUTH_FLOW")
+    @Column(name="DOCKER_AUTH_FLOW", length = 36)
     protected String dockerAuthenticationFlow;
 
 
-    @Column(name="INTERNATIONALIZATION_ENABLED")
+    @Column(name="INTERNATIONALIZATION_ENABLED", nullable = false)
     protected boolean internationalizationEnabled;
 
     @ElementCollection
-    @Column(name="VALUE")
+    @Column(name="VALUE", nullable = false)
     @CollectionTable(name="REALM_SUPPORTED_LOCALES", joinColumns={ @JoinColumn(name="REALM_ID") })
     protected Set<String> supportedLocales;
 
     @Column(name="DEFAULT_LOCALE")
     protected String defaultLocale;
 
-    @Column(name="ALLOW_USER_MANAGED_ACCESS")
+    @Column(name="ALLOW_USER_MANAGED_ACCESS", nullable = false)
     private boolean allowUserManagedAccess;
 
     @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "realm")

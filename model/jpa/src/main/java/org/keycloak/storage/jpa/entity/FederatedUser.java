@@ -48,7 +48,7 @@ public class FederatedUser {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String id;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", nullable = false, length = 36)
     protected String realmId;
 
     @Column(name = "STORAGE_PROVIDER_ID")

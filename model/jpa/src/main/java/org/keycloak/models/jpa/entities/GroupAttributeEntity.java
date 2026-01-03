@@ -49,10 +49,10 @@ public class GroupAttributeEntity {
     protected String id;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "GROUP_ID")
+    @JoinColumn(name = "GROUP_ID", nullable = false)
     protected GroupEntity group;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     protected String name;
     @Nationalized
     @Column(name = "VALUE")

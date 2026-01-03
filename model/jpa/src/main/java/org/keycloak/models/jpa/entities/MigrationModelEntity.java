@@ -45,7 +45,7 @@ public class MigrationModelEntity {
     @Column(name="VERSION", length = 36)
     protected String version;
 
-    @Column(name="UPDATE_TIME")
+    @Column(name="UPDATE_TIME", nullable = false)
     protected long updatedTime;
 
     public String getId() {

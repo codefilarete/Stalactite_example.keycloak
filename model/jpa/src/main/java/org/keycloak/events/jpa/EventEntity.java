@@ -61,7 +61,7 @@ public class EventEntity {
     @Column(name="DETAILS_JSON", length = 2550)
     private String detailsJson;
 
-    @Column(name="DETAILS_JSON_LONG_VALUE")
+    @Column(name="DETAILS_JSON_LONG_VALUE", columnDefinition = "TEXT") // can't set it to NCLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     private String detailsJsonLongValue;
 
     public String getId() {

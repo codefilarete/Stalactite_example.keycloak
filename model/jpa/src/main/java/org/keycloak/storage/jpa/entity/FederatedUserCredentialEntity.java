@@ -50,10 +50,10 @@ public class FederatedUserCredentialEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String id;
 
-    @Column(name="SECRET_DATA")
+    @Column(name="SECRET_DATA", columnDefinition = "TEXT") // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     protected String secretData;
 
-    @Column(name="CREDENTIAL_DATA")
+    @Column(name="CREDENTIAL_DATA", columnDefinition = "TEXT") // can't set it to NCLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
     protected String credentialData;
 
     @Column(name="TYPE")
@@ -65,13 +65,13 @@ public class FederatedUserCredentialEntity {
     @Column(name="CREATED_DATE")
     protected Long createdDate;
 
-    @Column(name="USER_ID")
+    @Column(name="USER_ID", nullable = false)
     protected String userId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36, nullable = false)
     protected String realmId;
 
-    @Column(name = "STORAGE_PROVIDER_ID")
+    @Column(name = "STORAGE_PROVIDER_ID", length = 36)
     protected String storageProviderId;
 
     @Column(name="PRIORITY")

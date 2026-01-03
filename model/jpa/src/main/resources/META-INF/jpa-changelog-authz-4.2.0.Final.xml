@@ -30,7 +30,7 @@
 
         <addForeignKeyConstraint baseColumnNames="RESOURCE_ID" baseTableName="RESOURCE_URIS" constraintName="FK_RESOURCE_SERVER_URIS" referencedColumnNames="ID" referencedTableName="RESOURCE_SERVER_RESOURCE"/>
 
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.AuthzResourceUseMoreURIs"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.AuthzResourceUseMoreURIs"/>-->
 
         <dropColumn columnName="URI" tableName="RESOURCE_SERVER_RESOURCE"/>
     </changeSet>

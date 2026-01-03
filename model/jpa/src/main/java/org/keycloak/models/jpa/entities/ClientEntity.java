@@ -70,9 +70,9 @@ public class ClientEntity {
     private String description;
     @Column(name = "CLIENT_ID")
     private String clientId;
-    @Column(name="ENABLED")
+    @Column(name="ENABLED", nullable = false)
     private boolean enabled;
-    @Column(name = "ALWAYS_DISPLAY_IN_CONSOLE")
+    @Column(name = "ALWAYS_DISPLAY_IN_CONSOLE", nullable = false)
     private boolean alwaysDisplayInConsole;
     @Column(name="SECRET")
     private String secret;
@@ -82,25 +82,25 @@ public class ClientEntity {
     private String clientAuthenticatorType;
     @Column(name="NOT_BEFORE")
     private int notBefore;
-    @Column(name="PUBLIC_CLIENT")
+    @Column(name="PUBLIC_CLIENT", nullable = false)
     private boolean publicClient;
     @Column(name="PROTOCOL")
     private String protocol;
-    @Column(name="FRONTCHANNEL_LOGOUT")
+    @Column(name="FRONTCHANNEL_LOGOUT", nullable = false)
     private boolean frontchannelLogout;
-    @Column(name="FULL_SCOPE_ALLOWED")
+    @Column(name="FULL_SCOPE_ALLOWED",nullable = false)
     private boolean fullScopeAllowed;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36)
     protected String realmId;
 
     @ElementCollection
-    @Column(name="VALUE")
+    @Column(name="VALUE", nullable = false)
     @CollectionTable(name = "WEB_ORIGINS", joinColumns={ @JoinColumn(name="CLIENT_ID") })
     protected Set<String> webOrigins;
 
     @ElementCollection
-    @Column(name="VALUE")
+    @Column(name="VALUE", nullable = false)
     @CollectionTable(name = "REDIRECT_URIS", joinColumns={ @JoinColumn(name="CLIENT_ID") })
     protected Set<String> redirectUris;
 
@@ -116,7 +116,7 @@ public class ClientEntity {
     @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "client")
     Collection<ProtocolMapperEntity> protocolMappers = new LinkedList<>();
 
-    @Column(name="SURROGATE_AUTH_REQUIRED")
+    @Column(name="SURROGATE_AUTH_REQUIRED", nullable = false)
     private boolean surrogateAuthRequired;
 
     @Column(name="ROOT_URL")
@@ -128,29 +128,29 @@ public class ClientEntity {
     @Column(name="MANAGEMENT_URL")
     private String managementUrl;
 
-    @Column(name="BEARER_ONLY")
+    @Column(name="BEARER_ONLY", nullable = false)
     private boolean bearerOnly;
 
-    @Column(name="CONSENT_REQUIRED")
+    @Column(name="CONSENT_REQUIRED", nullable = false)
     private boolean consentRequired;
 
-    @Column(name="STANDARD_FLOW_ENABLED")
+    @Column(name="STANDARD_FLOW_ENABLED", nullable = false)
     private boolean standardFlowEnabled;
 
-    @Column(name="IMPLICIT_FLOW_ENABLED")
+    @Column(name="IMPLICIT_FLOW_ENABLED", nullable = false)
     private boolean implicitFlowEnabled;
 
-    @Column(name="DIRECT_ACCESS_GRANTS_ENABLED")
+    @Column(name="DIRECT_ACCESS_GRANTS_ENABLED", nullable = false)
     private boolean directAccessGrantsEnabled;
 
-    @Column(name="SERVICE_ACCOUNTS_ENABLED")
+    @Column(name="SERVICE_ACCOUNTS_ENABLED", nullable = false)
     private boolean serviceAccountsEnabled;
 
     @Column(name="NODE_REREG_TIMEOUT")
     private int nodeReRegistrationTimeout;
 
     @ElementCollection
-    @Column(name="ROLE_ID")
+    @Column(name="ROLE_ID", length = 36, nullable = false)
     @CollectionTable(name="SCOPE_MAPPING", joinColumns = { @JoinColumn(name="CLIENT_ID")})
     private Set<String> scopeMappingIds;
 

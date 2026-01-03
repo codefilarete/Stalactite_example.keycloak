@@ -60,13 +60,13 @@ public class UserConsentEntity {
     protected String id;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="USER_ID")
+    @JoinColumn(name="USER_ID", nullable = false)
     protected UserEntity user;
 
     @Column(name="CLIENT_ID")
     protected String clientId;
 
-    @Column(name="CLIENT_STORAGE_PROVIDER")
+    @Column(name="CLIENT_STORAGE_PROVIDER", length = 36)
     protected String clientStorageProvider;
 
     @Column(name="EXTERNAL_CLIENT_ID")

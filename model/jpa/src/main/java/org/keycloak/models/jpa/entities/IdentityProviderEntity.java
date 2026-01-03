@@ -41,7 +41,7 @@ public class IdentityProviderEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String internalId;
 
-    @Column(name = "REALM_ID")
+    @Column(name = "REALM_ID", length = 36)
     protected String realmId;
 
     @Column(name="PROVIDER_ID")
@@ -53,31 +53,31 @@ public class IdentityProviderEntity {
     @Column(name="PROVIDER_DISPLAY_NAME")
     private String displayName;
 
-    @Column(name="ENABLED")
+    @Column(name="ENABLED", nullable = false)
     private boolean enabled;
 
-    @Column(name = "TRUST_EMAIL")
+    @Column(name = "TRUST_EMAIL", nullable = false)
     private boolean trustEmail;
 
-    @Column(name="STORE_TOKEN")
+    @Column(name="STORE_TOKEN", nullable = false)
     private boolean storeToken;
 
-    @Column(name="LINK_ONLY")
+    @Column(name="LINK_ONLY", nullable = false)
     private boolean linkOnly;
 
     @Column(name="HIDE_ON_LOGIN")
     private boolean hideOnLogin;
 
-    @Column(name="ADD_TOKEN_ROLE")
+    @Column(name="ADD_TOKEN_ROLE", nullable = false)
     protected boolean addReadTokenRoleOnCreate;
 
-    @Column(name="AUTHENTICATE_BY_DEFAULT")
+    @Column(name="AUTHENTICATE_BY_DEFAULT", nullable = false)
     private boolean authenticateByDefault;
 
-    @Column(name="FIRST_BROKER_LOGIN_FLOW_ID")
+    @Column(name="FIRST_BROKER_LOGIN_FLOW_ID", length = 36)
     private String firstBrokerLoginFlowId;
 
-    @Column(name="POST_BROKER_LOGIN_FLOW_ID")
+    @Column(name="POST_BROKER_LOGIN_FLOW_ID", length = 36)
     private String postBrokerLoginFlowId;
 
     @Column(name="ORGANIZATION_ID")

@@ -23,14 +23,14 @@
                 <changeSetExecuted id="22.0.0-17484" author="keycloak" changeLogFile="META-INF/jpa-changelog-22.0.0.xml"/>
             </not>
         </preConditions>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate22_0_0_RemoveRhssoThemes"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate22_0_0_RemoveRhssoThemes"/>-->
     </changeSet>
 
     <changeSet author="keycloak" id="22.0.5-24031">
         <preConditions onSqlOutput="TEST" onFail="MARK_RAN">
             <changeSetExecuted id="22.0.0-17484" author="keycloak" changeLogFile="META-INF/jpa-changelog-22.0.0.xml"/>
         </preConditions>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate22_0_5_UpdateAccountTheme"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate22_0_5_UpdateAccountTheme"/>-->
     </changeSet>
 
 </databaseChangeLog>

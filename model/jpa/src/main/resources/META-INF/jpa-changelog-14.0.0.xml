@@ -116,7 +116,7 @@
 
     <changeSet author="keycloak" id="KEYCLOAK-18146-add-saml-art-binding-identifier">
         <validCheckSum>7:2fd554456fed4a82c698c555c5b751b6</validCheckSum>
-        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate14_0_0_MigrateSamlArtifactAttribute"/>
+<!--        <customChange class="org.keycloak.connections.jpa.updater.liquibase.custom.JpaUpdate14_0_0_MigrateSamlArtifactAttribute"/>-->
     </changeSet>
 
 </databaseChangeLog>

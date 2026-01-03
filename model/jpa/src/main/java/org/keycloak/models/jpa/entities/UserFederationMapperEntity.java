@@ -43,14 +43,14 @@ public class UserFederationMapperEntity {
     @Access(AccessType.PROPERTY) // we do this because relationships often fetch id, but not entity.  This avoids an extra SQL
     protected String id;
 
-    @Column(name="NAME")
+    @Column(name="NAME", nullable = false)
     protected String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FEDERATION_PROVIDER_ID")
+    @JoinColumn(name = "FEDERATION_PROVIDER_ID", nullable = false)
     protected UserFederationProviderEntity federationProvider;
 
-    @Column(name = "FEDERATION_MAPPER_TYPE")
+    @Column(name = "FEDERATION_MAPPER_TYPE", nullable = false)
     protected String federationMapperType;
 
     @ElementCollection
@@ -60,7 +60,7 @@ public class UserFederationMapperEntity {
     private Map<String, String> config;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "REALM_ID")
+    @JoinColumn(name = "REALM_ID", nullable = false)
     private RealmEntity realm;
 
     public String getId() {
