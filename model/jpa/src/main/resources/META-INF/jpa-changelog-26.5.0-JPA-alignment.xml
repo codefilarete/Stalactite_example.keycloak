@@ -409,6 +409,55 @@
         <dropForeignKeyConstraint baseTableName="identity_provider" constraintName="fk2b4ebc52ae5c3b34"/>
         <dropForeignKeyConstraint baseTableName="resource_server_resource" constraintName="fk_frsrho213xcx4wnkog82ssrfy"/>
         <dropForeignKeyConstraint baseTableName="identity_provider_mapper" constraintName="fk_idpm_realm"/>
+
+        <!-- Align CLIENT table unique constraint -->
+        <dropUniqueConstraint tableName="client" constraintName="uk_b71cjlbenv945rb6gcon438at"/>
+        <addUniqueConstraint tableName="client"
+                             columnNames="realm_id, client_id"
+                             constraintName="client_realm_id_client_id_key"/>
+
+        <!-- Align CLIENT_SCOPE table unique constraint -->
+        <dropUniqueConstraint tableName="client_scope" constraintName="uk_cli_scope"/>
+        <addUniqueConstraint tableName="client_scope"
+                             columnNames="realm_id, name"
+                             constraintName="client_scope_realm_id_name_key"/>
+
+        <!-- Align KEYCLOAK_ROLE table unique constraint -->
+        <dropUniqueConstraint tableName="keycloak_role" constraintName="UK_J3RWUVD56ONTGSUHOGM184WW2-2"/>
+        <addUniqueConstraint tableName="keycloak_role"
+                             columnNames="name, client_realm_constraint"
+                             constraintName="keycloak_role_name_client_realm_constraint_key"/>
+
+        <!-- Align USER_ENTITY (username) unique constraint -->
+        <dropUniqueConstraint tableName="user_entity" constraintName="uk_ru8tt6t700s9v50bu18ws5ha6"/>
+        <addUniqueConstraint tableName="user_entity"
+                             columnNames="realm_id, username"
+                             constraintName="user_entity_realm_id_username_key"/>
+
+        <!-- Align USER_ENTITY (email) unique constraint -->
+        <dropUniqueConstraint tableName="user_entity" constraintName="uk_dykn684sl8up1crfei6eckhd7"/>
+        <addUniqueConstraint tableName="user_entity"
+                             columnNames="realm_id, email_constraint"
+                             constraintName="user_entity_realm_id_email_constraint_key"/>
+
+        <!-- Align REALM table unique constraint -->
+        <dropUniqueConstraint tableName="realm" constraintName="uk_orvsdmla56612eaefiq6wl5oi"/>
+        <addUniqueConstraint tableName="realm"
+                             columnNames="name"
+                             constraintName="realm_name_key"/>
+
+        <!-- Align KEYCLOAK_GROUP table unique constraint -->
+        <dropUniqueConstraint tableName="keycloak_group" constraintName="sibling_names"/>
+        <addUniqueConstraint tableName="keycloak_group"
+                             columnNames="realm_id, parent_group, name"
+                             constraintName="keycloak_group_realm_id_parent_group_name_key"/>
+
+        <!-- Align USER_CONSENT table unique constraint -->
+        <dropUniqueConstraint tableName="user_consent" constraintName="uk_local_consent"/>
+        <addUniqueConstraint tableName="user_consent"
+                             columnNames="user_id, client_id"
+                             constraintName="user_consent_user_id_client_id_key"/>
+
     </changeSet>
 
 </databaseChangeLog>
