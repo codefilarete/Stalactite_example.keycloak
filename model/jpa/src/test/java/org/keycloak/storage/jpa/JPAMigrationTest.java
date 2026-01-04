@@ -51,6 +51,11 @@ public class JPAMigrationTest {
 	
 	@BeforeClass
 	public static void startContainers() {
+		// Fix for TestContainers 1.21.3 which is not compatible with local Docker environment
+		// The best fix would be to upgrade TestContainers to the 1.21.4 but we're stuck on the old one due to the Keycloak dependency onto quarkus-bom
+		// which manages it. Though we fix it with this short line of code.
+		// see https://github.com/testcontainers/testcontainers-java/issues/11212
+		System.setProperty("api.version", "1.44");
 		System.out.println("Starting containers");
 		POSTGRESQL_CONTAINER = buildContainer();
 		POSTGRESQL_CONTAINER.start();
