@@ -67,6 +67,348 @@
         <dropColumn tableName="KEYCLOAK_ROLE" columnName="REALM"/>
         <dropColumn tableName="REALM" columnName="SOCIAL"/>
         <dropColumn tableName="REALM" columnName="UPDATE_PROFILE_ON_SOC_LOGIN"/>
+
+        <addForeignKeyConstraint constraintName="fk5nslo2kos3fpda7kasp0rlg9v"
+                                 baseTableName="REQUIRED_ACTION_CONFIG" baseColumnNames="REQUIRED_ACTION_ID"
+                                 referencedTableName="REQUIRED_ACTION_PROVIDER" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fk71x7968ufy8r8os60wkd7t89t"
+                                 baseTableName="ORG_DOMAIN" baseColumnNames="ORG_ID"
+                                 referencedTableName="ORG" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fklgtjx8ivfl990t1k8b3bq08e0"
+                                 baseTableName="AUTHENTICATOR_CONFIG_ENTRY" baseColumnNames="AUTHENTICATOR_ID"
+                                 referencedTableName="AUTHENTICATOR_CONFIG" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fk5clnlbiyqndc1hroe5ei5cnox"
+                                 baseTableName="REALM_LOCALIZATIONS" baseColumnNames="REALM_ID"
+                                 referencedTableName="REALM" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fka8ud4iv2eymntsdxgh3qcbr17"
+                                 baseTableName="CLIENT_AUTH_FLOW_BINDINGS" baseColumnNames="CLIENT_ID"
+                                 referencedTableName="CLIENT" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fkdaa9l1mw9axfux1bkatcmjfao"
+                                 baseTableName="CLIENT_SCOPE_ROLE_MAPPING" baseColumnNames="ROLE_ID"
+                                 referencedTableName="KEYCLOAK_ROLE" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="fknrk82naqtyefbvu5tnoubbbbt"
+                                 baseTableName="FED_USER_CONSENT_CL_SCOPE" baseColumnNames="USER_CONSENT_ID"
+                                 referencedTableName="FED_USER_CONSENT" referencedColumnNames="ID"/>
+
+        <!-- Renaming some foreign keys (to be vendor compliant we have to drop-and-create them) -->
+        <dropForeignKeyConstraint baseTableName="web_origins" constraintName="fk_lojpho213xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fk1c0co420xe84nrvwpdg1p6de2"
+                                 baseTableName="web_origins" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="ID"/>
+
+        <dropForeignKeyConstraint baseTableName="client_scope_attributes" constraintName="fk_cl_scope_attr_scope"/>
+        <addForeignKeyConstraint constraintName="fk1w6bpmqf8teo04mx026cfl8el"
+                                 baseTableName="client_scope_attributes" baseColumnNames="scope_id"
+                                 referencedTableName="client_scope" referencedColumnNames="ID"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_supported_locales" constraintName="fk_supported_locales_realm"/>
+        <addForeignKeyConstraint constraintName="fk1wm14sgma2jwa6jvh0yub0xe2"
+                                 baseTableName="realm_supported_locales" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="ID"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_scope" constraintName="fk_frsrps213xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fk1xj82005v338501q6sa1irm9c"
+                                 baseTableName="resource_scope" baseColumnNames="scope_id"
+                                 referencedTableName="resource_server_scope" referencedColumnNames="ID"/>
+
+        <dropForeignKeyConstraint baseTableName="user_consent_client_scope" constraintName="fk_grntcsnt_clsc_usc"/>
+        <addForeignKeyConstraint constraintName="fk2iwrnt95i599i7qmki85wqyp4"
+                                 baseTableName="user_consent_client_scope" baseColumnNames="user_consent_id"
+                                 referencedTableName="user_consent" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="scope_policy" constraintName="fk_frsrasp13xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fk2sqtfixfhbc1deki59lssygdc"
+                                 baseTableName="scope_policy" baseColumnNames="policy_id"
+                                 referencedTableName="resource_server_policy" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="composite_role" constraintName="fk_a63wvekftu8jo1pnj81e7mce2"/>
+        <addForeignKeyConstraint constraintName="fk3gpod7occqerk1ykkg9fnl1c5"
+                                 baseTableName="composite_role" baseColumnNames="composite"
+                                 referencedTableName="keycloak_role" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="federated_identity" constraintName="fk404288b92ef007a6"/>
+        <addForeignKeyConstraint constraintName="fk3lmqdxk3jm4bub40skn2vera5"
+                                 baseTableName="federated_identity" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="policy_config" constraintName="fkdc34197cf864c4e43"/>
+        <addForeignKeyConstraint constraintName="fk4akhjcuxsqpyqn2cx3ksvj0gb"
+                                 baseTableName="policy_config" baseColumnNames="policy_id"
+                                 referencedTableName="resource_server_policy" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="role_attribute" constraintName="fk_role_attribute_id"/>
+        <addForeignKeyConstraint constraintName="fk6konni3btn5a3kpyo0c2a4fio"
+                                 baseTableName="role_attribute" baseColumnNames="role_id"
+                                 referencedTableName="keycloak_role" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_federation_config" constraintName="fk_t13hpu1j94r2ebpekr39x5eu5"/>
+        <addForeignKeyConstraint constraintName="fk6rrp2pt8urfy3u94ljvk0wmsc"
+                                 baseTableName="user_federation_config" baseColumnNames="user_federation_provider_id"
+                                 referencedTableName="user_federation_provider" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_server_scope" constraintName="fk_frsrso213xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fk771wshl5yn7170s48ogu3cmmy"
+                                 baseTableName="resource_server_scope" baseColumnNames="resource_server_id"
+                                 referencedTableName="resource_server" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="identity_provider_config" constraintName="fkdc4897cf864c4e43"/>
+        <addForeignKeyConstraint constraintName="fk7d1dsnmo6gapu042b9udy74x1"
+                                 baseTableName="identity_provider_config" baseColumnNames="identity_provider_id"
+                                 referencedTableName="identity_provider" referencedColumnNames="internal_id"/>
+
+        <dropForeignKeyConstraint baseTableName="scope_mapping" constraintName="fk_ouse064plmlr732lxjcn1q5f1"/>
+        <addForeignKeyConstraint constraintName="fk7drd1hft32ib7nteorag9q4ud"
+                                 baseTableName="scope_mapping" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="protocol_mapper" constraintName="fk_pcm_realm"/>
+        <addForeignKeyConstraint constraintName="fk88ja7rd0tp1m01f9r4boo34u3"
+                                 baseTableName="protocol_mapper" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="client_attributes" constraintName="fk3c47c64beacca966"/>
+        <addForeignKeyConstraint constraintName="fk8915l45j3dbfeib5jkby4fyq4"
+                                 baseTableName="client_attributes" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="client_initial_access" constraintName="fk_client_init_acc_realm"/>
+        <addForeignKeyConstraint constraintName="fk8jmod59dcp76wpre5aqcu0d7c"
+                                 baseTableName="client_initial_access" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="credential" constraintName="fk_pfyr0glasqyl0dei3kl69r6v0"/>
+        <addForeignKeyConstraint constraintName="fka6xvv957nfgg14bo1dmhpns5"
+                                 baseTableName="credential" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="required_action_provider" constraintName="fk_req_act_realm"/>
+        <addForeignKeyConstraint constraintName="fkb1t3dt4ofrmk9mr5cbluglohg"
+                                 baseTableName="required_action_provider" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_server_perm_ticket" constraintName="fk_frsrho213xcx4wnkog83sspmt"/>
+        <addForeignKeyConstraint constraintName="fkbdatn20yvhvduxck45spwo9g5"
+                                 baseTableName="resource_server_perm_ticket" baseColumnNames="resource_id"
+                                 referencedTableName="resource_server_resource" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="authentication_execution" constraintName="fk_auth_exec_realm"/>
+        <addForeignKeyConstraint constraintName="fkcpnc0m0jwd9gylap0byjei064"
+                                 baseTableName="authentication_execution" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_default_groups" constraintName="fk_def_groups_realm"/>
+        <addForeignKeyConstraint constraintName="fkd3h642jtj1pm7h9t112oded7c"
+                                 baseTableName="realm_default_groups" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_smtp_config" constraintName="fk_70ej8xdxgxd0b9hh6180irr0o"/>
+        <addForeignKeyConstraint constraintName="fkdsnw2vy1thovgtbjl7ackdffu"
+                                 baseTableName="realm_smtp_config" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_federation_provider" constraintName="fk_1fj32f6ptolw2qy60cd8n01e8"/>
+        <addForeignKeyConstraint constraintName="fkdt1xhnenabh7dtmixk6nfde6a"
+                                 baseTableName="user_federation_provider" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="default_client_scope" constraintName="fk_r_def_cli_scope_realm"/>
+        <addForeignKeyConstraint constraintName="fkdv2qwdi905o9yt0ttk4mi8qn8"
+                                 baseTableName="default_client_scope" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="authenticator_config" constraintName="fk_auth_realm"/>
+        <addForeignKeyConstraint constraintName="fkdv79ce1hldtk9asubnk504qko"
+                                 baseTableName="authenticator_config" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_scope" constraintName="fk_frsrpos13xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fke0q6yq7c3g5gxq2q66i1gswn7"
+                                 baseTableName="resource_scope" baseColumnNames="resource_id"
+                                 referencedTableName="resource_server_resource" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_policy" constraintName="fk_frsrpp213xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkem0mp9iv843gde0nwgc1uy1jh"
+                                 baseTableName="resource_policy" baseColumnNames="policy_id"
+                                 referencedTableName="resource_server_policy" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="associated_policy" constraintName="fk_frsrpas14xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkewk6h2a6sg2gf0jjglq1vugen"
+                                 baseTableName="associated_policy" baseColumnNames="policy_id"
+                                 referencedTableName="resource_server_policy" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_server_perm_ticket" constraintName="fk_frsrho213xcx4wnkog82sspmt"/>
+        <addForeignKeyConstraint constraintName="fkeyiugm6dq3sdmm5d4cydrhfv9"
+                                 baseTableName="resource_server_perm_ticket" baseColumnNames="resource_server_id"
+                                 referencedTableName="resource_server" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_attribute" constraintName="fk_5hrm2vlf9ql5fu022kqepovbr"/>
+        <addForeignKeyConstraint constraintName="fkfc8ia2lkiq7gs3mbru6o7h0qs"
+                                 baseTableName="resource_attribute" baseColumnNames="resource_id"
+                                 referencedTableName="resource_server_resource" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="authentication_flow" constraintName="fk_auth_flow_realm"/>
+        <addForeignKeyConstraint constraintName="fkfvi3bbft78le520gggevu193o"
+                                 baseTableName="authentication_flow" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_attribute" constraintName="fk_8shxd6l3e9atqukacxgpffptw"/>
+        <addForeignKeyConstraint constraintName="fkgl14xyknbw7hki6p7tcdcqubu"
+                                 baseTableName="realm_attribute" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="composite_role" constraintName="fk_gr7thllb9lu8q4vqa4524jjy8"/>
+        <addForeignKeyConstraint constraintName="fkgqhn9ogsk14lxm7ilmj4u5k6n"
+                                 baseTableName="composite_role" baseColumnNames="child_role"
+                                 referencedTableName="keycloak_role" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_policy" constraintName="fk_frsrpos53xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkh9d4k6jywvgutuo1k7kla9wcm"
+                                 baseTableName="resource_policy" baseColumnNames="resource_id"
+                                 referencedTableName="resource_server_resource" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_group_membership" constraintName="fk_user_group_user"/>
+        <addForeignKeyConstraint constraintName="fkhd54egqa5g0jcwichyc7rspm5"
+                                 baseTableName="user_group_membership" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="group_role_mapping" constraintName="fk_group_role_group"/>
+        <addForeignKeyConstraint constraintName="fkhmvlv6sqau6ru3xvuhjmugmns"
+                                 baseTableName="group_role_mapping" baseColumnNames="group_id"
+                                 referencedTableName="keycloak_group" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="protocol_mapper_config" constraintName="fk_pmconfig"/>
+        <addForeignKeyConstraint constraintName="fki7xitc6y6752xcnhlnycnd5yy"
+                                 baseTableName="protocol_mapper_config" baseColumnNames="protocol_mapper_id"
+                                 referencedTableName="protocol_mapper" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_consent" constraintName="fk_grntcsnt_user"/>
+        <addForeignKeyConstraint constraintName="fkicmojso97tmtxc210y5996118"
+                                 baseTableName="user_consent" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_enabled_event_types" constraintName="fk_h846o4h0w8epx5nwedrf5y69j"/>
+        <addForeignKeyConstraint constraintName="fkir68aqdvxur96ba2c27yhug1e"
+                                 baseTableName="realm_enabled_event_types" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="component" constraintName="fk_component_realm"/>
+        <addForeignKeyConstraint constraintName="fkiu24c9rccwe81okq6cawhvbxe"
+                                 baseTableName="component" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_server_perm_ticket" constraintName="fk_frsrho213xcx4wnkog84sspmt"/>
+        <addForeignKeyConstraint constraintName="fkj30hog3n7yskwqqf4lchfdpc9"
+                                 baseTableName="resource_server_perm_ticket" baseColumnNames="scope_id"
+                                 referencedTableName="resource_server_scope" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="component_config" constraintName="fk_component_config"/>
+        <addForeignKeyConstraint constraintName="fkkwy262tty5mdbhbwtlcwe1k0s"
+                                 baseTableName="component_config" baseColumnNames="component_id"
+                                 referencedTableName="component" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="authentication_execution" constraintName="fk_auth_exec_flow"/>
+        <addForeignKeyConstraint constraintName="fklbv3v7bilk7shc6neppg99hsr"
+                                 baseTableName="authentication_execution" baseColumnNames="flow_id"
+                                 referencedTableName="authentication_flow" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="group_attribute" constraintName="fk_group_attribute_group"/>
+        <addForeignKeyConstraint constraintName="fkltk4r5uyl8i83h3o5w2j9ayph"
+                                 baseTableName="group_attribute" baseColumnNames="group_id"
+                                 referencedTableName="keycloak_group" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="redirect_uris" constraintName="fk_1burs8pb4ouj97h5wuppahv9f"/>
+        <addForeignKeyConstraint constraintName="fkmnuhq24u1faxaew1guhg52gj1"
+                                 baseTableName="redirect_uris" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_attribute" constraintName="fk_5hrm2vlf9ql5fu043kqepovbr"/>
+        <addForeignKeyConstraint constraintName="fkmri9y4ho2nnq0sabhcdi3g0am"
+                                 baseTableName="user_attribute" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_events_listeners" constraintName="fk_h846o4h0w8epx5nxev9f5y69j"/>
+        <addForeignKeyConstraint constraintName="fkmykanyp4b0yni05pi0y78j503"
+                                 baseTableName="realm_events_listeners" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="associated_policy" constraintName="fk_frsr5s213xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkna0pudjd7mt1j3ekj713cma1v"
+                                 baseTableName="associated_policy" baseColumnNames="associated_policy_id"
+                                 referencedTableName="resource_server_policy" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_role_mapping" constraintName="fk_c4fqv34p1mbylloxang7b1q3l"/>
+        <addForeignKeyConstraint constraintName="fknco6kxmsv20rs8a0ywrw4xi9f"
+                                 baseTableName="user_role_mapping" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_federation_mapper" constraintName="fk_fedmapperpm_realm"/>
+        <addForeignKeyConstraint constraintName="fknhb66nsf48lxffpo1hs7g9b2i"
+                                 baseTableName="user_federation_mapper" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_server_policy" constraintName="fk_frsrpo213xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkoqy0feddatjog6aw97h4qg3in"
+                                 baseTableName="resource_server_policy" baseColumnNames="resource_server_id"
+                                 referencedTableName="resource_server" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="client_scope_role_mapping" constraintName="fk_cl_scope_rm_scope"/>
+        <addForeignKeyConstraint constraintName="fkoscu3p2w47i99cly8in33lrhe"
+                                 baseTableName="client_scope_role_mapping" baseColumnNames="scope_id"
+                                 referencedTableName="client_scope" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_server_perm_ticket" constraintName="fk_frsrpo2128cx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkpk44id51oklqdaguwx0ni7qt9"
+                                 baseTableName="resource_server_perm_ticket" baseColumnNames="policy_id"
+                                 referencedTableName="resource_server_policy" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="client_node_registrations" constraintName="fk4129723ba992f594"/>
+        <addForeignKeyConstraint constraintName="fkppco4w5ywyka4s33xr84v4kq7"
+                                 baseTableName="client_node_registrations" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="scope_policy" constraintName="fk_frsrpass3xcx4wnkog82ssrfy"/>
+        <addForeignKeyConstraint constraintName="fkq7l90v0vrd3uyy9k4mfjoyhcc"
+                                 baseTableName="scope_policy" baseColumnNames="scope_id"
+                                 referencedTableName="resource_server_scope" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="idp_mapper_config" constraintName="fk_idpmconfig"/>
+        <addForeignKeyConstraint constraintName="fkraojnvuep0dr5584vbgeaunx8"
+                                 baseTableName="idp_mapper_config" baseColumnNames="idp_mapper_id"
+                                 referencedTableName="identity_provider_mapper" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_required_action" constraintName="fk_6qj3w1jw9cvafhe19bwsiuvmd"/>
+        <addForeignKeyConstraint constraintName="fks533b28rr3drddwsx0t06lkp7"
+                                 baseTableName="user_required_action" baseColumnNames="user_id"
+                                 referencedTableName="user_entity" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_federation_mapper" constraintName="fk_fedmapperpm_fedprv"/>
+        <addForeignKeyConstraint constraintName="fkso3vkvgi634r12hpyed97l46s"
+                                 baseTableName="user_federation_mapper" baseColumnNames="federation_provider_id"
+                                 referencedTableName="user_federation_provider" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="protocol_mapper" constraintName="fk_cli_scope_mapper"/>
+        <addForeignKeyConstraint constraintName="fksr1vpars8s25uachbqgpaysyr"
+                                 baseTableName="protocol_mapper" baseColumnNames="client_scope_id"
+                                 referencedTableName="client_scope" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="resource_uris" constraintName="fk_resource_server_uris"/>
+        <addForeignKeyConstraint constraintName="fksrtmmrs5mp7s8boackjcy9css"
+                                 baseTableName="resource_uris" baseColumnNames="resource_id"
+                                 referencedTableName="resource_server_resource" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_federation_mapper_config" constraintName="fk_fedmapper_cfg"/>
+        <addForeignKeyConstraint constraintName="fksu4g543wns06j1ibun7438my6"
+                                 baseTableName="user_federation_mapper_config" baseColumnNames="user_federation_mapper_id"
+                                 referencedTableName="user_federation_mapper" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="realm_required_credential" constraintName="fk_5hg65lybevavkqfki3kponh9v"/>
+        <addForeignKeyConstraint constraintName="fktgv64jkog8lshdwwtlbsy4y7u"
+                                 baseTableName="realm_required_credential" baseColumnNames="realm_id"
+                                 referencedTableName="realm" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="identity_provider" constraintName="fk2b4ebc52ae5c3b34"/>
+        <dropForeignKeyConstraint baseTableName="resource_server_resource" constraintName="fk_frsrho213xcx4wnkog82ssrfy"/>
+        <dropForeignKeyConstraint baseTableName="identity_provider_mapper" constraintName="fk_idpm_realm"/>
     </changeSet>
 
 </databaseChangeLog>
