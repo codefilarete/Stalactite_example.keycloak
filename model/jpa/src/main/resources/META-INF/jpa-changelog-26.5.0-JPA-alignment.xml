@@ -485,7 +485,7 @@
         <!-- Renaming the unique index as mentioned on PermissionTicketEntity -->
         <dropUniqueConstraint tableName="resource_server_perm_ticket" constraintName="uk_frsr6t700s9v50bu18ws5pmt"/>
         <addUniqueConstraint tableName="resource_server_perm_ticket" constraintName="resource_server_perm_ticket_owner_requester_resource_server_key"
-                             columnNames="owner, requester"/>
+                             columnNames="OWNER, REQUESTER, RESOURCE_SERVER_ID, RESOURCE_ID, SCOPE_ID"/>
 
         <!-- Renaming the unique index as mentioned on PolicyEntity -->
         <dropUniqueConstraint tableName="resource_server_policy" constraintName="uk_frsrpt700s9v50bu18ws5ha6"/>
