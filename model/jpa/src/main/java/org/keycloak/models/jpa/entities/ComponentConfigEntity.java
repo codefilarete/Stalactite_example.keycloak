@@ -27,13 +27,18 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="COMPONENT_CONFIG")
+@Table(name="COMPONENT_CONFIG",
+		indexes = {
+				@Index(name = "IDX_COMPO_CONFIG_COMPO", columnList = "COMPONENT_ID")
+		}
+)
 @Entity
 public class ComponentConfigEntity {
 

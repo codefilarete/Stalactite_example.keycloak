@@ -28,6 +28,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Index;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -35,9 +36,13 @@ import java.util.Collection;
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
 @Entity
-@Table(name="FED_USER_CONSENT", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"USER_ID", "CLIENT_ID"})
-})
+@Table(name="FED_USER_CONSENT",
+        uniqueConstraints = { @UniqueConstraint(columnNames = {"USER_ID", "CLIENT_ID"}) },
+        indexes = {
+                @Index(name = "IDX_FU_CNSNT_EXT", columnList = "USER_ID, CLIENT_STORAGE_PROVIDER, EXTERNAL_CLIENT_ID"),
+                @Index(name = "IDX_FU_CONSENT_RU", columnList = "REALM_ID, USER_ID")
+        }
+)
 @NamedQueries({
         @NamedQuery(name="userFederatedConsentByUserAndClient", query="select consent from FederatedUserConsentEntity consent where consent.userId = :userId and consent.clientId = :clientId"),
         @NamedQuery(name="userFederatedConsentByUserAndExternalClient", query="select consent from FederatedUserConsentEntity consent where consent.userId = :userId and consent.clientStorageProvider = :clientStorageProvider and consent.externalClientId = :externalClientId"),

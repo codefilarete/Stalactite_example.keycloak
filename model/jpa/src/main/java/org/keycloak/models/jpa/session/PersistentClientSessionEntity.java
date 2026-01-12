@@ -21,6 +21,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -49,7 +50,10 @@ import java.io.Serializable;
         @NamedQuery(name="findClientSessionsByUserSessionAndClient", query="select sess from PersistentClientSessionEntity sess where sess.userSessionId=:userSessionId and sess.offline = :offline and sess.clientId=:clientId and sess.clientId != 'external'"),
         @NamedQuery(name="findClientSessionsByUserSessionAndExternalClient", query="select sess from PersistentClientSessionEntity sess where sess.userSessionId=:userSessionId and sess.offline = :offline and sess.clientStorageProvider = :clientStorageProvider and sess.externalClientId = :externalClientId and sess.clientStorageProvider != 'internal'")
 })
-@Table(name="OFFLINE_CLIENT_SESSION")
+@Table(name="OFFLINE_CLIENT_SESSION", indexes = {
+        @Index(name = "IDX_OFFLINE_CSS_BY_CLIENT", columnList = "CLIENT_ID, OFFLINE_FLAG"),
+        @Index(name = "IDX_OFFLINE_CSS_BY_CLIENT_STORAGE_PROVIDER", columnList = "CLIENT_STORAGE_PROVIDER, EXTERNAL_CLIENT_ID, OFFLINE_FLAG")
+})
 @Entity
 @DynamicUpdate
 @IdClass(PersistentClientSessionEntity.Key.class)

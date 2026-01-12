@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -51,6 +52,8 @@ import java.util.Set;
 //@DynamicUpdate
 @Table(name="KEYCLOAK_ROLE", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "NAME", "CLIENT_REALM_CONSTRAINT" })
+}, indexes = {
+		@Index(name = "IDX_KEYCLOAK_ROLE_CLIENT", columnList = "CLIENT")
 })
 @NamedQueries({
         @NamedQuery(name="getClientRoles", query="select role from RoleEntity role where role.clientId = :client order by role.name"),
@@ -95,7 +98,13 @@ public class RoleEntity {
     private String clientRealmConstraint;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {})
-    @JoinTable(name = "COMPOSITE_ROLE", joinColumns = @JoinColumn(name = "COMPOSITE"), inverseJoinColumns = @JoinColumn(name = "CHILD_ROLE"))
+    @JoinTable(name = "COMPOSITE_ROLE",
+            joinColumns = @JoinColumn(name = "COMPOSITE"),
+            inverseJoinColumns = @JoinColumn(name = "CHILD_ROLE"),
+            indexes = {
+                    @Index(name = "IDX_COMPOSITE", columnList = "COMPOSITE"),
+                    @Index(name = "IDX_COMPOSITE_CHILD", columnList = "CHILD_ROLE")
+            })
     private Set<RoleEntity> compositeRoles;
 
     @ManyToMany(mappedBy = "compositeRoles", fetch = FetchType.LAZY, cascade = {})

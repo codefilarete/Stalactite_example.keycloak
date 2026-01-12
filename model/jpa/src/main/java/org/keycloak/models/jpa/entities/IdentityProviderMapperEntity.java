@@ -26,6 +26,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import java.util.Map;
 
@@ -34,7 +35,11 @@ import java.util.Map;
  * @version $Revision: 1 $
  */
 @Entity
-@Table(name="IDENTITY_PROVIDER_MAPPER")
+@Table(name="IDENTITY_PROVIDER_MAPPER",
+        indexes = {
+                @Index(name = "IDX_ID_PROV_MAPP_REALM", columnList = "REALM_ID")
+        }
+)
 public class IdentityProviderMapperEntity {
 
     @Id

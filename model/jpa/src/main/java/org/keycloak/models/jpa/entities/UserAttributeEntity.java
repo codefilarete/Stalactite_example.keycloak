@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.Nationalized;
 
 import jakarta.persistence.Access;
@@ -42,7 +43,12 @@ import org.keycloak.storage.jpa.JpaHashUtils;
         @NamedQuery(name="deleteUserAttributesByNameAndUserOtherThan", query="delete from  UserAttributeEntity attr where attr.user.id = :userId and attr.name = :name and attr.id <> :attrId"),
         @NamedQuery(name="deleteUserAttributesByRealmAndLink", query="delete from  UserAttributeEntity attr where attr.user IN (select u from UserEntity u where u.realmId=:realmId and u.federationLink=:link)")
 })
-@Table(name="USER_ATTRIBUTE")
+@Table(name="USER_ATTRIBUTE", indexes = {
+        @Index(name = "IDX_USER_ATTRIBUTE", columnList = "USER_ID"),
+        @Index(name = "IDX_USER_ATTRIBUTE_NAME", columnList = "NAME, VALUE"),
+        @Index(name = "USER_ATTR_LONG_VALUES", columnList = "LONG_VALUE_HASH, NAME"),
+        @Index(name = "USER_ATTR_LONG_VALUES_LOWER_CASE", columnList = "LONG_VALUE_HASH_LOWER_CASE, NAME")
+})
 @Entity
 public class UserAttributeEntity {
 

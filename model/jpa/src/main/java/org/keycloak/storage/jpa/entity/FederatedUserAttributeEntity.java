@@ -22,6 +22,7 @@ import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -42,7 +43,13 @@ import org.keycloak.storage.jpa.JpaHashUtils;
         @NamedQuery(name="deleteFederatedAttributesByStorageProvider", query="delete from FederatedUserAttributeEntity e where e.storageProviderId=:storageProviderId"),
         @NamedQuery(name="deleteUserFederatedAttributesByRealmAndLink", query="delete from  FederatedUserAttributeEntity attr where attr.userId IN (select u.id from UserEntity u where u.realmId=:realmId and u.federationLink=:link)")
 })
-@Table(name="FED_USER_ATTRIBUTE")
+@Table(name = "FED_USER_ATTRIBUTE",
+        indexes = {
+                @Index(name = "FED_USER_ATTR_LONG_VALUES", columnList = "LONG_VALUE_HASH, NAME"),
+                @Index(name = "FED_USER_ATTR_LONG_VALUES_LOWER_CASE", columnList = "LONG_VALUE_HASH_LOWER_CASE, NAME"),
+                @Index(name = "IDX_FU_ATTRIBUTE", columnList = "USER_ID, REALM_ID, NAME")
+        }
+)
 @Entity
 public class FederatedUserAttributeEntity {
 

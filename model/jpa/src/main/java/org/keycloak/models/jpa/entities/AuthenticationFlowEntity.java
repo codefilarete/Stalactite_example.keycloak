@@ -26,6 +26,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -37,7 +38,11 @@ import java.util.LinkedList;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="AUTHENTICATION_FLOW")
+@Table(name="AUTHENTICATION_FLOW",
+        indexes = {
+                @Index(name = "IDX_AUTH_FLOW_REALM", columnList = "REALM_ID")
+        }
+)
 @Entity
 public class AuthenticationFlowEntity {
     @Id

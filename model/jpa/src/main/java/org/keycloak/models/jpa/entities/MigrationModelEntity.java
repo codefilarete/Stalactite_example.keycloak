@@ -22,6 +22,7 @@ import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -32,8 +33,10 @@ import jakarta.persistence.UniqueConstraint;
  * @version $Revision: 1 $
  */
 @Table(name="MIGRATION_MODEL", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"UPDATE_TIME"}, name = "UK_MIGRATION_UPDATE_TIME"),
-		@UniqueConstraint(columnNames = {"VERSION"}, name = "UK_MIGRATION_VERSION")
+        @UniqueConstraint(columnNames = {"UPDATE_TIME"}, name = "UK_MIGRATION_UPDATE_TIME"),
+        @UniqueConstraint(columnNames = {"VERSION"}, name = "UK_MIGRATION_VERSION")
+}, indexes = {
+        @Index(name = "IDX_UPDATE_TIME", columnList = "UPDATE_TIME")
 })
 @Entity
 @NamedQueries({

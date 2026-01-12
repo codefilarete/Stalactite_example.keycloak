@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.session;
 
+import jakarta.persistence.Index;
 import jakarta.persistence.Version;
 import org.hibernate.annotations.DynamicUpdate;
 import org.keycloak.storage.jpa.KeyUtils;
@@ -62,7 +63,11 @@ import java.io.Serializable;
                 " GROUP BY clientSess.clientId, clientSess.externalClientId, clientSess.clientStorageProvider")
 
 })
-@Table(name="OFFLINE_USER_SESSION")
+@Table(name="OFFLINE_USER_SESSION", indexes = {
+        @Index(name = "IDX_OFFLINE_USS_BY_BROKER_SESSION_ID", columnList = "BROKER_SESSION_ID, REALM_ID"),
+        @Index(name = "IDX_OFFLINE_USS_BY_LAST_SESSION_REFRESH", columnList = "REALM_ID, OFFLINE_FLAG, LAST_SESSION_REFRESH"),
+        @Index(name = "IDX_OFFLINE_USS_BY_USER", columnList = "USER_ID, REALM_ID, OFFLINE_FLAG")
+})
 @Entity
 @DynamicUpdate
 @IdClass(PersistentUserSessionEntity.Key.class)

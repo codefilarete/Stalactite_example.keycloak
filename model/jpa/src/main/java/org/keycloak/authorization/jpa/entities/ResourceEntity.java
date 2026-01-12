@@ -27,6 +27,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -50,9 +51,13 @@ import org.hibernate.annotations.FetchMode;
  * @author <a href="mailto:psilva@redhat.com">Pedro Igor</a>
  */
 @Entity
-@Table(name = "RESOURCE_SERVER_RESOURCE", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"NAME", "OWNER", "RESOURCE_SERVER_ID"}, name = "UK_FRSR6T700S9V50BU18WS5HA6")
-})
+@Table(name = "RESOURCE_SERVER_RESOURCE",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "NAME", "OWNER", "RESOURCE_SERVER_ID" }, name = "UK_FRSR6T700S9V50BU18WS5HA6")
+        },
+        indexes = {
+                @Index(name = "IDX_RES_SRV_RES_RES_SRV", columnList = "RESOURCE_SERVER_ID")
+        })
 @NamedQueries(
         {
                 @NamedQuery(name="findResourceIdByOwner", query="select r from ResourceEntity r  where r.resourceServer = :serverId and r.owner = :owner"),

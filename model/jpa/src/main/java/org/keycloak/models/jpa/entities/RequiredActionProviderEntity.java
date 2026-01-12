@@ -25,6 +25,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyColumn;
@@ -37,7 +38,10 @@ import java.util.Map;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="REQUIRED_ACTION_PROVIDER")
+@Table(name="REQUIRED_ACTION_PROVIDER",
+        indexes = {
+                @Index(name = "IDX_REQ_ACT_PROV_REALM", columnList = "REALM_ID")
+        })
 @Entity
 @NamedQueries({
         @NamedQuery(name="deleteRequiredActionProviderByRealm", query="delete from RequiredActionProviderEntity action where action.realm = :realm"),})

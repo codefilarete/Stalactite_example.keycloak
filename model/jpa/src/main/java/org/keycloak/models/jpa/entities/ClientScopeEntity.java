@@ -30,6 +30,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -44,7 +45,10 @@ import org.hibernate.annotations.Nationalized;
  * @version $Revision: 1 $
  */
 @Entity
-@Table(name="CLIENT_SCOPE", uniqueConstraints = {@UniqueConstraint(columnNames = {"REALM_ID", "NAME"})})
+@Table(name="CLIENT_SCOPE", uniqueConstraints = {@UniqueConstraint(columnNames = {"REALM_ID", "NAME"})},
+        indexes = {
+                @Index(name = "IDX_REALM_CLSCOPE", columnList = "REALM_ID")
+        })
 @NamedQueries({
         @NamedQuery(name="getClientScopeIds", query="select scope.id from ClientScopeEntity scope where scope.realmId = :realm"),
         @NamedQuery(name = "getClientScopesByProtocol",

@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.Nationalized;
 
 import jakarta.persistence.Column;
@@ -39,7 +40,10 @@ import java.io.Serializable;
         @NamedQuery(name="deleteRealmAttributesByRealm", query="delete from RealmAttributeEntity attr where attr.realm = :realm"),
         @NamedQuery(name="selectRealmAttributesNotEmptyByName", query="select ra from RealmAttributeEntity ra WHERE ra.name = :name and length(ra.value) > 0")
 })
-@Table(name="REALM_ATTRIBUTE")
+@Table(name="REALM_ATTRIBUTE",
+        indexes = {
+                @Index(name = "IDX_REALM_ATTR_REALM", columnList = "REALM_ID")
+        })
 @Entity
 @IdClass(RealmAttributeEntity.Key.class)
 public class RealmAttributeEntity {

@@ -22,6 +22,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -45,7 +46,9 @@ import java.io.Serializable;
         @NamedQuery(name="grantRoleToAllUsers", query="insert into UserRoleMappingEntity (roleId, user) select :roleId, user from UserEntity user where user.realmId = :realmId")
 
 })
-@Table(name="USER_ROLE_MAPPING")
+@Table(name="USER_ROLE_MAPPING", indexes = {
+        @Index(name = "IDX_USER_ROLE_MAPPING", columnList = "USER_ID")
+})
 @Entity
 @IdClass(UserRoleMappingEntity.Key.class)
 public class UserRoleMappingEntity  {

@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.Nationalized;
 
 import jakarta.persistence.Access;
@@ -37,7 +38,9 @@ import jakarta.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "deleteRoleAttributesByNameAndUser", query = "delete from RoleAttributeEntity attr where attr.role.id = :roleId and attr.name = :name"),
 })
-@Table(name = "ROLE_ATTRIBUTE")
+@Table(name = "ROLE_ATTRIBUTE", indexes = {
+		@Index(name = "IDX_ROLE_ATTRIBUTE", columnList = "ROLE_ID")
+})
 @Entity
 public class RoleAttributeEntity {
 

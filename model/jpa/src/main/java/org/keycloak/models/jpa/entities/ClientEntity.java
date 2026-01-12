@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.Nationalized;
 
 import jakarta.persistence.Access;
@@ -46,7 +47,10 @@ import java.util.Set;
  * @version $Revision: 1 $
  */
 @Entity
-@Table(name="CLIENT", uniqueConstraints = {@UniqueConstraint(columnNames = {"REALM_ID", "CLIENT_ID"})})
+@Table(name="CLIENT",
+        uniqueConstraints = { @UniqueConstraint(columnNames = {"REALM_ID", "CLIENT_ID"}) },
+        indexes = { @Index(name = "IDX_CLIENT_ID", columnList = "CLIENT_ID") }
+)
 @NamedQueries({
         @NamedQuery(name="getClientById", query="select client from ClientEntity client where client.id = :id and client.realmId = :realm"),
         @NamedQuery(name="getAlwaysDisplayInConsoleClients", query="select client.id from ClientEntity client where client.alwaysDisplayInConsole = true and client.realmId = :realm order by client.clientId"),
@@ -96,12 +100,12 @@ public class ClientEntity {
 
     @ElementCollection
     @Column(name="VALUE", nullable = false)
-    @CollectionTable(name = "WEB_ORIGINS", joinColumns={ @JoinColumn(name="CLIENT_ID") })
+    @CollectionTable(name = "WEB_ORIGINS", joinColumns={ @JoinColumn(name="CLIENT_ID") }, indexes = @Index(name = "IDX_WEB_ORIG_CLIENT", columnList = "CLIENT_ID"))
     protected Set<String> webOrigins;
 
     @ElementCollection
     @Column(name="VALUE", nullable = false)
-    @CollectionTable(name = "REDIRECT_URIS", joinColumns={ @JoinColumn(name="CLIENT_ID") })
+    @CollectionTable(name = "REDIRECT_URIS", joinColumns={ @JoinColumn(name="CLIENT_ID") }, indexes = @Index(name = "IDX_REDIR_URI_CLIENT", columnList = "CLIENT_ID"))
     protected Set<String> redirectUris;
 
     @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "client")
@@ -151,7 +155,7 @@ public class ClientEntity {
 
     @ElementCollection
     @Column(name="ROLE_ID", length = 36, nullable = false)
-    @CollectionTable(name="SCOPE_MAPPING", joinColumns = { @JoinColumn(name="CLIENT_ID")})
+    @CollectionTable(name="SCOPE_MAPPING", joinColumns = { @JoinColumn(name="CLIENT_ID")}, indexes = @Index(name = "IDX_SCOPE_MAPPING_ROLE", columnList = "ROLE_ID"))
     private Set<String> scopeMappingIds;
 
     @ElementCollection

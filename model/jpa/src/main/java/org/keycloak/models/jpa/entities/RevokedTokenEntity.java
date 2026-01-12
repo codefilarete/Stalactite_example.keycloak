@@ -20,6 +20,7 @@ package org.keycloak.models.jpa.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 /**
@@ -27,7 +28,10 @@ import jakarta.persistence.Table;
  *
  * @author Alexander Schwartz
  */
-@Table(name="REVOKED_TOKEN")
+@Table(name="REVOKED_TOKEN",
+		indexes = {
+				@Index(name = "IDX_REV_TOKEN_ON_EXPIRE", columnList = "EXPIRE")
+		})
 @Entity
 public class RevokedTokenEntity {
     @Id

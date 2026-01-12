@@ -22,6 +22,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -43,7 +44,10 @@ import java.io.Serializable;
         @NamedQuery(name="deleteGroupRoleMappingsByGroup", query="delete from GroupRoleMappingEntity m where m.group = :group")
 
 })
-@Table(name="GROUP_ROLE_MAPPING")
+@Table(name="GROUP_ROLE_MAPPING",
+		indexes = {
+				@Index(name = "IDX_GROUP_ROLE_MAPP_GROUP", columnList = "GROUP_ID")
+		})
 @Entity
 @IdClass(GroupRoleMappingEntity.Key.class)
 public class GroupRoleMappingEntity {

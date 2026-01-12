@@ -22,6 +22,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -42,7 +43,12 @@ import java.io.Serializable;
         @NamedQuery(name= "deleteFederatedIdentityByRealmAndLink", query="delete from FederatedIdentityEntity social where social.user IN (select u from UserEntity u where realmId=:realmId and u.federationLink=:link)"),
         @NamedQuery(name= "deleteFederatedIdentityByUser", query="delete from FederatedIdentityEntity social where social.user = :user")
 })
-@Table(name="FEDERATED_IDENTITY")
+@Table(name="FEDERATED_IDENTITY",
+        indexes = {
+                @Index(name = "IDX_FEDIDENTITY_FEDUSER", columnList = "FEDERATED_USER_ID"),
+                @Index(name = "IDX_FEDIDENTITY_USER", columnList = "USER_ID")
+        }
+)
 @Entity
 @IdClass(FederatedIdentityEntity.Key.class)
 public class FederatedIdentityEntity {

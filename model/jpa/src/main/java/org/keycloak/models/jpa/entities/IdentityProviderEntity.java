@@ -24,6 +24,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
@@ -38,6 +39,11 @@ import java.util.Map;
 @Table(name="IDENTITY_PROVIDER",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = {"provider_alias", "realm_id"}, name = "uk_2daelwnibji49avxsrtuf6xj33")
+		},
+		indexes = {
+				@Index(name = "IDX_IDENT_PROV_REALM", columnList = "REALM_ID"),
+				@Index(name = "IDX_IDP_FOR_LOGIN", columnList = "REALM_ID, ENABLED, LINK_ONLY, HIDE_ON_LOGIN, ORGANIZATION_ID"),
+				@Index(name = "IDX_IDP_REALM_ORG", columnList = "REALM_ID, ORGANIZATION_ID")
 		})
 public class IdentityProviderEntity {
 

@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.Nationalized;
 
 import jakarta.persistence.Access;
@@ -39,7 +40,13 @@ import jakarta.persistence.Table;
         @NamedQuery(name="getGroupAttributesByNameAndValue", query="select attr from GroupAttributeEntity attr where attr.name = :name and attr.value = :value"),
         @NamedQuery(name="deleteGroupAttributesByRealm", query="delete from  GroupAttributeEntity a where a.group IN (select u from GroupEntity u where u.realm=:realm)")
 })
-@Table(name="GROUP_ATTRIBUTE")
+@Table(name="GROUP_ATTRIBUTE",
+        indexes = {
+				// Note that the Liquibase expression used for the value ("(value)::varchar(250)") is not supported by Hibernate so we simplify it here by "VALUE"
+                @Index(name = "IDX_GROUP_ATT_BY_NAME_VALUE", columnList = "NAME, VALUE"),
+                @Index(name = "IDX_GROUP_ATTR_GROUP", columnList = "GROUP_ID")
+        }
+)
 @Entity
 public class GroupAttributeEntity {
 

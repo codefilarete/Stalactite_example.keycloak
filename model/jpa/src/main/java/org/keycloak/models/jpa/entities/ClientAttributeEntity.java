@@ -24,6 +24,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -34,7 +35,13 @@ import org.hibernate.annotations.Nationalized;
 /**
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
-@Table(name="CLIENT_ATTRIBUTES")
+@Table(name="CLIENT_ATTRIBUTES",
+		indexes = {
+				// Note that in Liquibase the index is more complex than this by expressing it with a substring of the value column
+				// (depending on the database)
+				@Index(name = "IDX_CLIENT_ATT_BY_NAME_VALUE", columnList = "NAME, VALUE")
+		}
+)
 @Entity
 @IdClass(ClientAttributeEntity.Key.class)
 public class ClientAttributeEntity {

@@ -17,6 +17,7 @@
 
 package org.keycloak.models.jpa.entities;
 
+import jakarta.persistence.Index;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -56,10 +57,15 @@ import java.util.LinkedList;
         @NamedQuery(name="unlinkUsers", query="update UserEntity u set u.federationLink = null where u.realmId = :realmId and u.federationLink=:link")
 })
 @Entity
-@Table(name="USER_ENTITY", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "REALM_ID", "USERNAME" }),
-        @UniqueConstraint(columnNames = { "REALM_ID", "EMAIL_CONSTRAINT" })
-})
+@Table(name = "USER_ENTITY",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "REALM_ID", "USERNAME" }),
+                @UniqueConstraint(columnNames = { "REALM_ID", "EMAIL_CONSTRAINT" })
+        },
+        indexes = {
+                @Index(name = "IDX_USER_EMAIL", columnList = "EMAIL"),
+                @Index(name = "IDX_USER_SERVICE_ACCOUNT", columnList = "REALM_ID, SERVICE_ACCOUNT_CLIENT_LINK")
+        })
 public class UserEntity {
     @Id
     @Column(name="ID", length = 36)

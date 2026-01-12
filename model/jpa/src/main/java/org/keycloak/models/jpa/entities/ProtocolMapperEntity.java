@@ -29,6 +29,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.Index;
 import java.util.Map;
 
 /**
@@ -36,7 +37,12 @@ import java.util.Map;
  * @version $Revision: 1 $
  */
 @Entity
-@Table(name="PROTOCOL_MAPPER")
+@Table(name="PROTOCOL_MAPPER",
+        indexes = {
+                @Index(name = "IDX_CLSCOPE_PROTMAP", columnList = "CLIENT_SCOPE_ID"),
+                @Index(name = "IDX_PROTOCOL_MAPPER_CLIENT", columnList = "CLIENT_ID")
+        }
+)
 public class ProtocolMapperEntity {
 
     @Id

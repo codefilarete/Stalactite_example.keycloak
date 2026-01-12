@@ -25,6 +25,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyColumn;
@@ -36,7 +37,11 @@ import jakarta.persistence.UniqueConstraint;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="AUTHENTICATOR_CONFIG")
+@Table(name="AUTHENTICATOR_CONFIG",
+        indexes = {
+                @Index(name = "idx_auth_config_realm", columnList = "REALM_ID")
+        }
+)
 @Entity
 public class AuthenticatorConfigEntity {
     @Id

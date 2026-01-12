@@ -25,6 +25,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -38,7 +39,12 @@ import jakarta.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "authenticationFlowExecution", query = "select authExec from AuthenticationExecutionEntity authExec where authExec.flowId = :flowId")
 })
-@Table(name="AUTHENTICATION_EXECUTION")
+@Table(name="AUTHENTICATION_EXECUTION",
+        indexes = {
+                @Index(name = "IDX_AUTH_EXEC_FLOW", columnList = "FLOW_ID"),
+                @Index(name = "IDX_AUTH_EXEC_REALM_FLOW", columnList = "REALM_ID, FLOW_ID")
+        }
+)
 @Entity
 public class AuthenticationExecutionEntity {
     @Id

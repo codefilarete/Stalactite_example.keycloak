@@ -24,6 +24,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -41,6 +42,8 @@ import java.util.LinkedList;
 @Table(name="USER_CONSENT", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"USER_ID", "CLIENT_ID"}),
         @UniqueConstraint(columnNames = {"CLIENT_STORAGE_PROVIDER", "EXTERNAL_CLIENT_ID", "USER_ID"}, name = "UK_EXTERNAL_CONSENT")
+}, indexes = {
+        @Index(name = "IDX_USER_CONSENT", columnList = "USER_ID")
 })
 @NamedQueries({
         @NamedQuery(name="userConsentByUserAndClient", query="select consent from UserConsentEntity consent where consent.user.id = :userId and consent.clientId = :clientId"),

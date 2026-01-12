@@ -21,6 +21,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -36,7 +37,12 @@ import java.io.Serializable;
         @NamedQuery(name="deleteClientScopeRoleMappingByRole", query="delete from ClientScopeRoleMappingEntity where role = :role"),
         @NamedQuery(name="deleteClientScopeRoleMappingByClientScope", query="delete from ClientScopeRoleMappingEntity where clientScope = :clientScope")
 })
-@Table(name="CLIENT_SCOPE_ROLE_MAPPING")
+@Table(name="CLIENT_SCOPE_ROLE_MAPPING",
+		indexes = {
+				@Index(name = "IDX_CLSCOPE_ROLE", columnList = "SCOPE_ID"),
+				@Index(name = "IDX_ROLE_CLSCOPE", columnList = "ROLE_ID")
+		}
+)
 @Entity
 @IdClass(ClientScopeRoleMappingEntity.Key.class)
 public class ClientScopeRoleMappingEntity {

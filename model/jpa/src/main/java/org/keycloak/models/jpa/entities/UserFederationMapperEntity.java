@@ -25,6 +25,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyColumn;
@@ -35,7 +36,10 @@ import java.util.Map;
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
 @Entity
-@Table(name="USER_FEDERATION_MAPPER")
+@Table(name="USER_FEDERATION_MAPPER", indexes = {
+        @Index(name = "IDX_USR_FED_MAP_FED_PRV", columnList = "FEDERATION_PROVIDER_ID"),
+        @Index(name = "IDX_USR_FED_MAP_REALM", columnList = "REALM_ID")
+})
 public class UserFederationMapperEntity {
 
     @Id

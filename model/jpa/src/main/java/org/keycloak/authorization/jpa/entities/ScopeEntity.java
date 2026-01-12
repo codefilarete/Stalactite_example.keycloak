@@ -24,6 +24,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -39,9 +40,13 @@ import java.util.List;
  * @author <a href="mailto:psilva@redhat.com">Pedro Igor</a>
  */
 @Entity
-@Table(name = "RESOURCE_SERVER_SCOPE", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"NAME", "RESOURCE_SERVER_ID"})
-})
+@Table(name = "RESOURCE_SERVER_SCOPE",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "NAME", "RESOURCE_SERVER_ID" })
+        },
+        indexes = {
+                @Index(name = "IDX_RES_SRV_SCOPE_RES_SRV", columnList = "RESOURCE_SERVER_ID")
+        })
 @NamedQueries(
         {
                 @NamedQuery(name="findScopeIdByName", query="select s.id from ScopeEntity s where s.resourceServer.id = :serverId and s.name = :name"),

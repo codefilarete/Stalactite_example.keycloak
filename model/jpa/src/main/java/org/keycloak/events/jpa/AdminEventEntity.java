@@ -20,13 +20,19 @@ package org.keycloak.events.jpa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 /**
  * @author <a href="mailto:giriraj.sharma27@gmail.com">Giriraj Sharma</a>
  */
 @Entity
-@Table(name="ADMIN_EVENT_ENTITY")
+@Table(
+		name = "ADMIN_EVENT_ENTITY",
+		indexes = {
+				@Index(name = "idx_admin_event_time", columnList = "REALM_ID, ADMIN_EVENT_TIME")
+		}
+)
 public class AdminEventEntity {
 
     @Id

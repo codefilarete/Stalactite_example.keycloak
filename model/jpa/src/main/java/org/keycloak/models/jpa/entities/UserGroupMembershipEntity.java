@@ -22,6 +22,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -43,7 +44,9 @@ import org.keycloak.representations.idm.MembershipType;
         @NamedQuery(name="deleteUserGroupMembershipsByUser", query="delete from UserGroupMembershipEntity m where m.user = :user"),
         @NamedQuery(name="userCountInGroups", query="select count(m.user) from UserGroupMembershipEntity m where m.user.realmId = :realmId and m.groupId in :groupIds")
 })
-@Table(name="USER_GROUP_MEMBERSHIP")
+@Table(name="USER_GROUP_MEMBERSHIP", indexes = {
+        @Index(name = "IDX_USER_GROUP_MAPPING", columnList = "USER_ID")
+})
 @Entity
 @IdClass(UserGroupMembershipEntity.Key.class)
 public class UserGroupMembershipEntity {

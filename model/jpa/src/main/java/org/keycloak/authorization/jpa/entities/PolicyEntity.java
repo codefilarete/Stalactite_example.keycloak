@@ -28,6 +28,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
@@ -50,9 +51,13 @@ import org.keycloak.representations.idm.authorization.Logic;
  * @author <a href="mailto:psilva@redhat.com">Pedro Igor</a>
  */
 @Entity
-@Table(name = "RESOURCE_SERVER_POLICY", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"NAME", "RESOURCE_SERVER_ID"})
-})
+@Table(name = "RESOURCE_SERVER_POLICY",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"NAME", "RESOURCE_SERVER_ID"})
+        },
+        indexes = {
+                @Index(name = "IDX_RES_SERV_POL_RES_SERV", columnList = "RESOURCE_SERVER_ID")
+        })
 @NamedQueries(
         {
                 @NamedQuery(name="findPolicyIdByServerId", query="select p.id from PolicyEntity p where  p.resourceServer.id = :serverId "),
@@ -110,11 +115,11 @@ public class PolicyEntity {
     private Set<PolicyEntity> associatedPolicies;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {})
-    @JoinTable(name = "RESOURCE_POLICY", joinColumns = @JoinColumn(name = "POLICY_ID"), inverseJoinColumns = @JoinColumn(name = "RESOURCE_ID"))
+    @JoinTable(name = "RESOURCE_POLICY", joinColumns = @JoinColumn(name = "POLICY_ID"), inverseJoinColumns = @JoinColumn(name = "RESOURCE_ID"), indexes = @Index(name = "IDX_RES_POLICY_POLICY", columnList = "POLICY_ID"))
     private Set<ResourceEntity> resources;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {})
-    @JoinTable(name = "SCOPE_POLICY", joinColumns = @JoinColumn(name = "POLICY_ID"), inverseJoinColumns = @JoinColumn(name = "SCOPE_ID"))
+    @JoinTable(name = "SCOPE_POLICY", joinColumns = @JoinColumn(name = "POLICY_ID"), inverseJoinColumns = @JoinColumn(name = "SCOPE_ID"), indexes = @Index(name = "IDX_SCOPE_POLICY_POLICY", columnList = "POLICY_ID"))
     private Set<ScopeEntity> scopes;
 
     @Column(name = "OWNER")

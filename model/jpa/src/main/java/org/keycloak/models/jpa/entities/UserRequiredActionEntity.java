@@ -22,6 +22,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -38,7 +39,9 @@ import java.io.Serializable;
         @NamedQuery(name="deleteUserRequiredActionsByRealmAndLink", query="delete from UserRequiredActionEntity action where action.user IN (select u from UserEntity u where u.realmId=:realmId and u.federationLink=:link)")
 })
 @Entity
-@Table(name="USER_REQUIRED_ACTION")
+@Table(name="USER_REQUIRED_ACTION", indexes = {
+        @Index(name = "IDX_USER_REQACTIONS", columnList = "USER_ID")
+})
 @IdClass(UserRequiredActionEntity.Key.class)
 public class UserRequiredActionEntity {
 

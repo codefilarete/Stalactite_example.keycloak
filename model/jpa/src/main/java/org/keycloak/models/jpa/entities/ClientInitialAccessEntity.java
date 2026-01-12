@@ -23,6 +23,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -33,7 +34,11 @@ import jakarta.persistence.Table;
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
 @Entity
-@Table(name="CLIENT_INITIAL_ACCESS")
+@Table(name="CLIENT_INITIAL_ACCESS",
+		indexes = {
+				@Index(name = "IDX_CLIENT_INIT_ACC_REALM", columnList = "REALM_ID")
+		}
+)
 @NamedQueries({
         @NamedQuery(name="findClientInitialAccessByRealm", query="select ia from ClientInitialAccessEntity ia where ia.realm = :realm order by timestamp"),
         @NamedQuery(name="removeClientInitialAccessByRealm", query="delete from ClientInitialAccessEntity ia where ia.realm = :realm"),

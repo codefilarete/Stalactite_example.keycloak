@@ -27,6 +27,7 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import jakarta.persistence.Index;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -42,7 +43,12 @@ import java.io.Serializable;
         @NamedQuery(name="deleteFederatedUserRoleMappingsByUser", query="delete from FederatedUserRoleMappingEntity m where m.userId = :userId and m.realmId = :realmId"),
         @NamedQuery(name="fedRoleMembership", query="select m.userId FROM FederatedUserRoleMappingEntity m where m.roleId = :roleId AND m.realmId = :realmId"),  
 })
-@Table(name="FED_USER_ROLE_MAPPING")
+@Table(name="FED_USER_ROLE_MAPPING",
+        indexes = {
+                @Index(name = "IDX_FU_ROLE_MAPPING", columnList = "USER_ID, ROLE_ID"),
+                @Index(name = "IDX_FU_ROLE_MAPPING_RU", columnList = "REALM_ID, USER_ID")
+        }
+)
 @Entity
 @IdClass(FederatedUserRoleMappingEntity.Key.class)
 public class FederatedUserRoleMappingEntity {

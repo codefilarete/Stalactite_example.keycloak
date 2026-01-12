@@ -25,6 +25,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 
@@ -44,7 +45,12 @@ import java.io.Serializable;
         @NamedQuery(name="deleteFederatedUserGroupMembershipsByUser", query="delete from FederatedUserGroupMembershipEntity m where m.userId = :userId and m.realmId = :realmId")
 
 })
-@Table(name="FED_USER_GROUP_MEMBERSHIP")
+@Table(name="FED_USER_GROUP_MEMBERSHIP",
+        indexes = {
+                @Index(name = "IDX_FU_GROUP_MEMBERSHIP", columnList = "USER_ID, GROUP_ID"),
+                @Index(name = "IDX_FU_GROUP_MEMBERSHIP_RU", columnList = "REALM_ID, USER_ID")
+        }
+)
 @Entity
 @IdClass(FederatedUserGroupMembershipEntity.Key.class)
 public class FederatedUserGroupMembershipEntity {

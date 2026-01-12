@@ -23,6 +23,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -35,8 +36,12 @@ import jakarta.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "RESOURCE_SERVER_PERM_TICKET", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"OWNER", "REQUESTER", "RESOURCE_SERVER_ID", "RESOURCE_ID", "SCOPE_ID"})
-})
+                @UniqueConstraint(columnNames = {"OWNER", "REQUESTER", "RESOURCE_SERVER_ID", "RESOURCE_ID", "SCOPE_ID"})
+        },
+        indexes = {
+                @Index(name = "IDX_PERM_TICKET_OWNER", columnList = "OWNER"),
+                @Index(name = "IDX_PERM_TICKET_REQUESTER", columnList = "REQUESTER")
+        })
 @NamedQueries(
     {
         @NamedQuery(name="findPermissionIdByResource", query="select p.id from PermissionTicketEntity p inner join p.resource r where p.resourceServer.id = :serverId and (r.resourceServer = :serverId and r.id = :resourceId)"),

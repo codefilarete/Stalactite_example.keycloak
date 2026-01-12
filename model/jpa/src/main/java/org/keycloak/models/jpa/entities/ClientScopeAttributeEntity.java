@@ -24,6 +24,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -31,7 +32,11 @@ import jakarta.persistence.Table;
 /**
  * @author <a href="mailto:mposolda@redhat.com">Marek Posolda</a>
  */
-@Table(name="CLIENT_SCOPE_ATTRIBUTES")
+@Table(name="CLIENT_SCOPE_ATTRIBUTES",
+        indexes = {
+                @Index(name = "IDX_CLSCOPE_ATTRS", columnList = "SCOPE_ID")
+        }
+)
 @Entity
 @IdClass(ClientScopeAttributeEntity.Key.class)
 public class ClientScopeAttributeEntity {

@@ -23,6 +23,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -40,7 +41,12 @@ import jakarta.persistence.Table;
         @NamedQuery(name="addClientScopeToAllClients", query="insert into ClientScopeClientMappingEntity (clientScopeId, defaultScope, clientId) select :clientScopeId, :defaultScope, client.id from ClientEntity client where client.realmId = :realmId and client.bearerOnly <> true and client.protocol = :clientProtocol")
 })
 @Entity
-@Table(name="CLIENT_SCOPE_CLIENT")
+@Table(name="CLIENT_SCOPE_CLIENT",
+        indexes = {
+                @Index(name = "IDX_CL_CLSCOPE", columnList = "SCOPE_ID"),
+				@Index(name = "IDX_CLSCOPE_CL", columnList = "CLIENT_ID")
+        }
+)
 @IdClass(ClientScopeClientMappingEntity.Key.class)
 public class ClientScopeClientMappingEntity {
 

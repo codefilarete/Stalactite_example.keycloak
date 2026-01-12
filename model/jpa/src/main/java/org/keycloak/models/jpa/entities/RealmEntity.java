@@ -26,6 +26,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKey;
 import jakarta.persistence.MapKeyColumn;
@@ -47,7 +48,10 @@ import java.util.Set;
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="REALM")
+@Table(name="REALM",
+        indexes = {
+                @Index(name = "IDX_REALM_MASTER_ADM_CLI", columnList = "MASTER_ADMIN_CLIENT"),
+        })
 @Entity
 @NamedQueries({
         @NamedQuery(name="getAllRealmIds", query="select realm.id from RealmEntity realm"),
@@ -162,8 +166,9 @@ public class RealmEntity {
     @CollectionTable(
         name = "REALM_DEFAULT_GROUPS",
         joinColumns = @JoinColumn(name = "REALM_ID"),
-		// a group can be a default one only once
-        uniqueConstraints = @UniqueConstraint(columnNames = "GROUP_ID", name = "con_group_id_def_groups")
+        // a group can be a default one only once
+        uniqueConstraints = @UniqueConstraint(columnNames = "GROUP_ID", name = "con_group_id_def_groups"),
+        indexes = @Index(name = "IDX_REALM_DEF_GRP_REALM", columnList = "REALM_ID")
     )
     protected Set<String> defaultGroupIds;
 
@@ -174,12 +179,12 @@ public class RealmEntity {
 
     @ElementCollection
     @Column(name="VALUE", nullable = false)
-    @CollectionTable(name="REALM_EVENTS_LISTENERS", joinColumns={ @JoinColumn(name="REALM_ID") })
+    @CollectionTable(name="REALM_EVENTS_LISTENERS", joinColumns={ @JoinColumn(name="REALM_ID") }, indexes = @Index(name = "IDX_REALM_EVT_LIST_REALM", columnList = "REALM_ID"))
     protected Set<String> eventsListeners;
 
     @ElementCollection
     @Column(name="VALUE", nullable = false)
-    @CollectionTable(name="REALM_ENABLED_EVENT_TYPES", joinColumns={ @JoinColumn(name="REALM_ID") })
+    @CollectionTable(name="REALM_ENABLED_EVENT_TYPES", joinColumns={ @JoinColumn(name="REALM_ID") }, indexes = @Index(name = "IDX_REALM_EVT_TYPES_REALM", columnList = "REALM_ID"))
     protected Set<String> enabledEventTypes;
 
     @Column(name="ADMIN_EVENTS_ENABLED", nullable = false)
@@ -230,7 +235,7 @@ public class RealmEntity {
 
     @ElementCollection
     @Column(name="VALUE", nullable = false)
-    @CollectionTable(name="REALM_SUPPORTED_LOCALES", joinColumns={ @JoinColumn(name="REALM_ID") })
+    @CollectionTable(name="REALM_SUPPORTED_LOCALES", joinColumns={ @JoinColumn(name="REALM_ID") }, indexes = @Index(name = "IDX_REALM_SUPP_LOCAL_REALM", columnList = "REALM_ID"))
     protected Set<String> supportedLocales;
 
     @Column(name="DEFAULT_LOCALE")

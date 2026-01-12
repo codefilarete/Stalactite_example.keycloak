@@ -24,6 +24,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -41,7 +42,12 @@ import jakarta.persistence.Table;
         @NamedQuery(name="deleteDefaultClientScopeRealmMappingByRealm", query="delete from DefaultClientScopeRealmMappingEntity where realm = :realm")
 })
 @Entity
-@Table(name="DEFAULT_CLIENT_SCOPE")
+@Table(name="DEFAULT_CLIENT_SCOPE",
+        indexes = {
+                @Index(name = "IDX_DEFCLS_REALM", columnList = "REALM_ID"),
+                @Index(name = "IDX_DEFCLS_SCOPE", columnList = "SCOPE_ID")
+        }
+)
 @IdClass(DefaultClientScopeRealmMappingEntity.Key.class)
 public class DefaultClientScopeRealmMappingEntity {
 

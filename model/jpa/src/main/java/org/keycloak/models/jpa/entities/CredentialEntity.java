@@ -23,6 +23,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -40,7 +41,9 @@ import jakarta.persistence.Version;
         @NamedQuery(name="deleteCredentialsByRealmAndLink", query="delete from CredentialEntity cred where cred.user IN (select u from UserEntity u where u.realmId=:realmId and u.federationLink=:link)")
 
 })
-@Table(name="CREDENTIAL")
+@Table(name="CREDENTIAL", indexes = {
+        @Index(name = "IDX_USER_CREDENTIAL", columnList = "USER_ID")
+})
 @Entity
 public class CredentialEntity {
     @Id

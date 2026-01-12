@@ -24,6 +24,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
@@ -43,7 +44,10 @@ import jakarta.persistence.Table;
         @NamedQuery(name="deleteUserConsentClientScopesByClientStorageProvider", query="delete from UserConsentClientScopeEntity grantedScope where grantedScope.userConsent IN (select consent from UserConsentEntity consent where consent.clientStorageProvider = :clientStorageProvider)"),
 })
 @Entity
-@Table(name="USER_CONSENT_CLIENT_SCOPE")
+@Table(name="USER_CONSENT_CLIENT_SCOPE", indexes = {
+				@Index(name = "IDX_USCONSENT_CLSCOPE", columnList = "USER_CONSENT_ID"),
+				@Index(name = "IDX_USCONSENT_SCOPE_ID", columnList = "SCOPE_ID")
+		})
 @IdClass(UserConsentClientScopeEntity.Key.class)
 public class UserConsentClientScopeEntity {
 
