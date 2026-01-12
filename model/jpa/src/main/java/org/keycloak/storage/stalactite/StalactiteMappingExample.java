@@ -41,7 +41,7 @@ import java.util.UUID;
  *
  * @author Keycloak Team
  */
-public class RealmEntityStalactiteExample {
+public class StalactiteMappingExample {
 
     private final PersistenceContext persistenceContext;
     private final EntityPersister<RealmEntity, String> realmPersister;
@@ -51,7 +51,7 @@ public class RealmEntityStalactiteExample {
      *
      * @param dataSource JDBC DataSource
      */
-    public RealmEntityStalactiteExample(DataSource dataSource) {
+    public StalactiteMappingExample(DataSource dataSource) {
         // Create connection provider
 
         // Create dialect (use appropriate dialect for your database)
@@ -62,10 +62,17 @@ public class RealmEntityStalactiteExample {
 
         // Initialize RealmEntity mapping
         RealmEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+        UserEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+		
 		Collection<Table<?>> tables = DDLDeployer.collectTables(persistenceContext);
 		CaseInsensitiveMap<Table<?>> tablePerName = Iterables.map(tables, Table::getName, () -> new CaseInsensitiveMap<>());
+		// Fixing column type that can't be fixed through DSL
 		dialect.getSqlTypeRegistry().put(tablePerName.get("realm_attribute").getColumn("value"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("realm_localizations").getColumn("texts"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("credential").getColumn("credential_data"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("credential").getColumn("secret_data"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("federated_identity").getColumn("token"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("user_attribute").getColumn("long_value"), "TEXT");
 		
 		// Get the persister for RealmEntity
         this.realmPersister = persistenceContext.findPersister(RealmEntity.class);

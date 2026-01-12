@@ -110,12 +110,12 @@ public class StalactiteMigrationTest {
 	public void deployStalactiteSchema(DataSource stalactiteDataSource) throws SQLException {
 		Connection stalactiteConnection = stalactiteDataSource.getConnection();
 		
-		RealmEntityStalactiteExample realmEntityStalactiteExample = new RealmEntityStalactiteExample(stalactiteDataSource);
+		StalactiteMappingExample stalactiteMappingExample = new StalactiteMappingExample(stalactiteDataSource);
 		
 		// Because Stalactite sets the connection in a transaction mode, we must disable it to make DDLDeployer commit the schema changes
 		// (PostgreSQL is a rare database that make schema changes transactional)
-		realmEntityStalactiteExample.getPersistenceContext().getConnectionProvider().giveConnection().setAutoCommit(true);
-		DDLDeployer ddlDeployer = new DDLDeployer(realmEntityStalactiteExample.getPersistenceContext());
+		stalactiteMappingExample.getPersistenceContext().getConnectionProvider().giveConnection().setAutoCommit(true);
+		DDLDeployer ddlDeployer = new DDLDeployer(stalactiteMappingExample.getPersistenceContext());
 		ddlDeployer.getCreationScripts().forEach(System.out::println);
 		ddlDeployer.deployDDL();
 	}

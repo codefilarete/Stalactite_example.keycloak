@@ -53,15 +53,22 @@ import java.io.Serializable;
 @IdClass(FederatedIdentityEntity.Key.class)
 public class FederatedIdentityEntity {
 
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private UserEntity user;
+	@Id
+	private FederatedIdentityEntity.Key key;
+	
+	public FederatedIdentityEntity.Key getKey() {
+		return key;
+	}
+	
+//    @Id
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "USER_ID")
+//    private UserEntity user;
 
     @Column(name = "REALM_ID", length = 36)
     protected String realmId;
 
-    @Id
+//    @Id
     @Column(name = "IDENTITY_PROVIDER")
     protected String identityProvider;
     @Column(name = "FEDERATED_USER_ID")
@@ -72,12 +79,12 @@ public class FederatedIdentityEntity {
     @Column(name = "TOKEN", columnDefinition = "TEXT")
     protected String token;
 
-    public UserEntity getUser() {
-        return user;
-    }
+//    public UserEntity getUser() {
+//        return user;
+//    }
 
     public void setUser(UserEntity user) {
-        this.user = user;
+        this.key.userId = user.getId();
     }
 
     public String getIdentityProvider() {
@@ -121,22 +128,29 @@ public class FederatedIdentityEntity {
     }
 
     public static class Key implements Serializable {
-
-        protected UserEntity user;
-
+		
+		@Column(name = "FEDERATED_USER_ID")
+        protected String userId;
+//        protected UserEntity user;
+		
+		@Column(name = "IDENTITY_PROVIDER")
         protected String identityProvider;
 
         public Key() {
         }
 
         public Key(UserEntity user, String identityProvider) {
-            this.user = user;
+            this.userId = user.getId();
             this.identityProvider = identityProvider;
         }
-
-        public UserEntity getUser() {
-            return user;
-        }
+		
+		public String getUserId() {
+			return userId;
+		}
+		
+		//        public UserEntity getUser() {
+//            return user;
+//        }
 
         public String getIdentityProvider() {
             return identityProvider;
@@ -151,21 +165,22 @@ public class FederatedIdentityEntity {
 
             if (identityProvider != null ? !identityProvider.equals(key.identityProvider) : key.identityProvider != null)
                 return false;
-            if (user != null ? !user.getId().equals(key.user != null ? key.user.getId() : null) : key.user != null) return false;
+            if (userId != null ? !userId.equals(key.userId != null ? key.userId : null) : key.userId != null) return false;
+//            if (user != null ? !user.getId().equals(key.user != null ? key.user.getId() : null) : key.user != null) return false;
 
             return true;
         }
 
         @Override
         public int hashCode() {
-            int result = user != null ? user.getId().hashCode() : 0;
+            int result = userId != null ? userId.hashCode() : 0;
             result = 31 * result + (identityProvider != null ? identityProvider.hashCode() : 0);
             return result;
         }
 
         @Override
         public String toString() {
-            return "FederatedIdentityEntity.Key [user=" + (user != null ? user.getId() : null) + ", identityProvider=" + identityProvider + "]";
+            return "FederatedIdentityEntity.Key [user=" + (userId != null ? userId : null) + ", identityProvider=" + identityProvider + "]";
         }
     }
 
@@ -175,20 +190,23 @@ public class FederatedIdentityEntity {
         if (o == null) return false;
         if (!(o instanceof FederatedIdentityEntity)) return false;
 
-        FederatedIdentityEntity key = (FederatedIdentityEntity) o;
-
-        if (identityProvider != null ? !identityProvider.equals(key.identityProvider) : key.identityProvider != null)
-            return false;
-        if (user != null ? !user.getId().equals(key.user != null ? key.user.getId() : null) : key.user != null) return false;
-
-        return true;
+		return this.key.equals(((FederatedIdentityEntity) o).key);
+		
+//        FederatedIdentityEntity key = (FederatedIdentityEntity) o;
+//
+//        if (identityProvider != null ? !identityProvider.equals(key.identityProvider) : key.identityProvider != null)
+//            return false;
+//        if (user != null ? !user.getId().equals(key.user != null ? key.user.getId() : null) : key.user != null) return false;
+//
+//        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = user != null ? user.getId().hashCode() : 0;
-        result = 31 * result + (identityProvider != null ? identityProvider.hashCode() : 0);
-        return result;
+		return this.key.hashCode();
+//        int result = user != null ? user.getId().hashCode() : 0;
+//        result = 31 * result + (identityProvider != null ? identityProvider.hashCode() : 0);
+//        return result;
     }
 
 

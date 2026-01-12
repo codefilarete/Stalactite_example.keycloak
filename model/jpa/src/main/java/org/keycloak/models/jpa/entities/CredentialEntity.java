@@ -78,7 +78,7 @@ public class CredentialEntity {
     protected byte[] salt;
 
     @Version
-    @Column(name="VERSION")
+    @Column(name="VERSION", nullable = false)
     private int version;
 
     public String getId() {
