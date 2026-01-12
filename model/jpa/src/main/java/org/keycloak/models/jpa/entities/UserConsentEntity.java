@@ -39,7 +39,8 @@ import java.util.LinkedList;
  */
 @Entity
 @Table(name="USER_CONSENT", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"USER_ID", "CLIENT_ID"})
+        @UniqueConstraint(columnNames = {"USER_ID", "CLIENT_ID"}),
+        @UniqueConstraint(columnNames = {"CLIENT_STORAGE_PROVIDER", "EXTERNAL_CLIENT_ID", "USER_ID"}, name = "UK_EXTERNAL_CONSENT")
 })
 @NamedQueries({
         @NamedQuery(name="userConsentByUserAndClient", query="select consent from UserConsentEntity consent where consent.user.id = :userId and consent.clientId = :clientId"),

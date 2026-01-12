@@ -51,7 +51,7 @@ import org.hibernate.annotations.FetchMode;
  */
 @Entity
 @Table(name = "RESOURCE_SERVER_RESOURCE", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"NAME", "RESOURCE_SERVER_ID", "OWNER"})
+        @UniqueConstraint(columnNames = {"NAME", "OWNER", "RESOURCE_SERVER_ID"}, name = "UK_FRSR6T700S9V50BU18WS5HA6")
 })
 @NamedQueries(
         {

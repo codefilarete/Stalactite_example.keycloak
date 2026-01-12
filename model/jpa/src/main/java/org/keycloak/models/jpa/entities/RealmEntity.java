@@ -33,6 +33,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -157,7 +159,12 @@ public class RealmEntity {
 
     @ElementCollection
     @Column(name="GROUP_ID", nullable = false, length = 36)
-    @CollectionTable(name="REALM_DEFAULT_GROUPS", joinColumns={ @JoinColumn(name="REALM_ID") })
+    @CollectionTable(
+        name = "REALM_DEFAULT_GROUPS",
+        joinColumns = @JoinColumn(name = "REALM_ID"),
+		// a group can be a default one only once
+        uniqueConstraints = @UniqueConstraint(columnNames = "GROUP_ID", name = "con_group_id_def_groups")
+    )
     protected Set<String> defaultGroupIds;
 
     @Column(name="EVENTS_ENABLED", nullable = false)

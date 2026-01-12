@@ -25,12 +25,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-@Table(name="MIGRATION_MODEL")
+@Table(name="MIGRATION_MODEL", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"UPDATE_TIME"}, name = "UK_MIGRATION_UPDATE_TIME"),
+		@UniqueConstraint(columnNames = {"VERSION"}, name = "UK_MIGRATION_VERSION")
+})
 @Entity
 @NamedQueries({
         @NamedQuery(name = "getLatest", query = "select m from MigrationModelEntity m ORDER BY m.updatedTime DESC")

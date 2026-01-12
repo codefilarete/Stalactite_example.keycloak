@@ -492,13 +492,6 @@
         <addUniqueConstraint tableName="resource_server_policy" constraintName="resource_server_policy_name_resource_server_id_key"
                              columnNames="name, resource_server_id"/>
 
-        <!-- Creating the unique index as mentioned on ResourceEntity -->
-        <createIndex tableName="resource_server_resource" indexName="resource_server_resource_name_resource_server_id_owner_key" unique="true">
-            <column name="name"/>
-            <column name="resource_server_id"/>
-            <column name="owner"/>
-        </createIndex>
-
         <!-- Renaming the unique index as mentioned on PolicyEntity -->
         <dropUniqueConstraint tableName="resource_server_scope" constraintName="uk_frsrst700s9v50bu18ws5ha6"/>
         <addUniqueConstraint tableName="resource_server_scope" constraintName="resource_server_scope_name_resource_server_id_key"

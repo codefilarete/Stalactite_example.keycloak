@@ -27,13 +27,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
 import java.util.Map;
 
 /**
  * @author Pedro Igor
  */
 @Entity
-@Table(name="IDENTITY_PROVIDER")
+@Table(name="IDENTITY_PROVIDER",
+		uniqueConstraints = {
+				@UniqueConstraint(columnNames = {"provider_alias", "realm_id"}, name = "uk_2daelwnibji49avxsrtuf6xj33")
+		})
 public class IdentityProviderEntity {
 
     @Id

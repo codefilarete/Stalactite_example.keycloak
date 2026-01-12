@@ -31,9 +31,14 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import org.keycloak.utils.StringUtil;
 
-@Table(name="ORG")
+@Table(name = "ORG", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "GROUP_ID", name = "UK_ORG_GROUP"),
+		@UniqueConstraint(columnNames = { "REALM_ID", "NAME" }, name = "UK_ORG_NAME"),
+		@UniqueConstraint(columnNames = { "REALM_ID", "ALIAS" }, name = "UK_ORG_ALIAS")
+})
 @Entity
 @NamedQueries({
         @NamedQuery(name="getByOrgName", query="select distinct o from OrganizationEntity o where o.realmId = :realmId AND o.name = :name"),

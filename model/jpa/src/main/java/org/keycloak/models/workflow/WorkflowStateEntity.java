@@ -22,6 +22,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,7 +31,9 @@ import java.util.Objects;
  * Represents the state of a resource within a time-based workflow.
  */
 @Entity
-@Table(name = "WORKFLOW_STATE")
+@Table(name = "WORKFLOW_STATE", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"WORKFLOW_ID", "RESOURCE_ID"}, name = "UQ_WORKFLOW_RESOURCE")
+})
 public class WorkflowStateEntity {
 
     @Id
