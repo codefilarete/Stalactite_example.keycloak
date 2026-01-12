@@ -63,6 +63,8 @@ public class StalactiteMappingExample {
         // Initialize RealmEntity mapping
         RealmEntityPersistenceConfiguration.initializePersistence(persistenceContext);
         UserEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+		ClientEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+		ClientScopePersistenceConfiguration.initializePersistence(persistenceContext);
 		
 		Collection<Table<?>> tables = DDLDeployer.collectTables(persistenceContext);
 		CaseInsensitiveMap<Table<?>> tablePerName = Iterables.map(tables, Table::getName, () -> new CaseInsensitiveMap<>());
@@ -73,6 +75,8 @@ public class StalactiteMappingExample {
 		dialect.getSqlTypeRegistry().put(tablePerName.get("credential").getColumn("secret_data"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("federated_identity").getColumn("token"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("user_attribute").getColumn("long_value"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("client_attributes").getColumn("value"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("protocol_mapper_config").getColumn("value"), "TEXT");
 		
 		// Get the persister for RealmEntity
         this.realmPersister = persistenceContext.findPersister(RealmEntity.class);
