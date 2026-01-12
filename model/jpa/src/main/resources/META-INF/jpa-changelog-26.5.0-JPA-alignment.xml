@@ -503,4 +503,15 @@
         </createIndex>
     </changeSet>
 
+<!--    <changeSet id="Stal" author="guiom.mary">-->
+<!--        &lt;!&ndash;-->
+<!--         REALM_LOCALIZATIONS.reaml_id is not aligned with RealmId length : it is created with 255 (Hibernate default value)-->
+<!--         whereas it should be 36. Stalactite raises an exception when adding this column to the Table that has-->
+<!--         the 255-column because its code make the back-reference having same size has the referred column. Hence, we have to fix Keycloak schema.-->
+<!--         &ndash;&gt;-->
+<!--        <modifyDataType tableName="REALM_LOCALIZATIONS"-->
+<!--                        columnName="REALM_ID"-->
+<!--                        newDataType="VARCHAR(36)"/>-->
+<!--    </changeSet>-->
+
 </databaseChangeLog>

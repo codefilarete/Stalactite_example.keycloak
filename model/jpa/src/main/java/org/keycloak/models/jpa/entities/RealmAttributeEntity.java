@@ -31,6 +31,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -49,23 +51,36 @@ import java.io.Serializable;
 public class RealmAttributeEntity {
 
     @Id
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "REALM_ID")
-    protected RealmEntity realm;
+    private Key key;
 
-    @Id
-    @Column(name = "NAME")
-    protected String name;
+//    @Id
+//    @ManyToOne(fetch= FetchType.LAZY)
+//    @JoinColumn(name = "REALM_ID")
+//    protected RealmEntity realm;
+//
+//    @Id
+//    @Column(name = "NAME")
+//    protected String name;
+
     @Nationalized
     @Column(name = "VALUE", columnDefinition = "TEXT")
     protected String value;
 
+    public void setId(UUID uuid) {
+        this.key = new Key();
+        this.key.setRealmId(uuid.toString());
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
     public String getName() {
-        return name;
+        return key.name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.key.name = name;
     }
 
     public String getValue() {
@@ -76,30 +91,39 @@ public class RealmAttributeEntity {
         this.value = value;
     }
 
-    public RealmEntity getRealm() {
-        return realm;
+    public String getRealmId() {
+        return key.getRealmId();
     }
 
     public void setRealm(RealmEntity realm) {
-        this.realm = realm;
+        this.key.setRealm(realm);
     }
 
     public static class Key implements Serializable {
 
-        protected RealmEntity realm;
+        protected String realmId;
 
         protected String name;
 
         public Key() {
         }
 
-        public Key(RealmEntity user, String name) {
-            this.realm = user;
+        public Key(RealmEntity realm, String name) {
+            this.realmId = realm.getId();
             this.name = name;
         }
 
-        public RealmEntity getRealm() {
-            return realm;
+        public void setRealm(RealmEntity realm) {
+            this.realmId = realm.getId();
+        }
+
+        public String getRealmId() {
+            return realmId;
+        }
+
+        public Key setRealmId(String realmId) {
+            this.realmId = realmId;
+            return this;
         }
 
         public String getName() {
@@ -111,17 +135,15 @@ public class RealmAttributeEntity {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            Key key = (Key) o;
+            Key that = (Key) o;
 
-            if (name != null ? !name.equals(key.name) : key.name != null) return false;
-            if (realm != null ? !realm.getId().equals(key.realm != null ? key.realm.getId() : null) : key.realm != null) return false;
-
-            return true;
+            return Objects.equals(realmId, that.realmId) &&
+                    Objects.equals(name, that.name);
         }
 
         @Override
         public int hashCode() {
-            int result = realm != null ? realm.getId().hashCode() : 0;
+            int result = realmId != null ? realmId.hashCode() : 0;
             result = 31 * result + (name != null ? name.hashCode() : 0);
             return result;
         }
@@ -131,21 +153,14 @@ public class RealmAttributeEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (!(o instanceof RealmAttributeEntity)) return false;
+        if (!(o instanceof RealmAttributeEntity that)) return false;
 
-        RealmAttributeEntity key = (RealmAttributeEntity) o;
-
-        if (name != null ? !name.equals(key.name) : key.name != null) return false;
-        if (realm != null ? !realm.getId().equals(key.realm != null ? key.realm.getId() : null) : key.realm != null) return false;
-
-        return true;
+        return Objects.equals(key, that.key);
     }
 
     @Override
     public int hashCode() {
-        int result = realm != null ? realm.getId().hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return key.hashCode();
     }
 
 

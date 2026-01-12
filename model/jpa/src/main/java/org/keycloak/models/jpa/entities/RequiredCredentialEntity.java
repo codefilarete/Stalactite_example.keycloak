@@ -37,13 +37,15 @@ import java.io.Serializable;
 public class RequiredCredentialEntity {
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "REALM_ID")
-    protected RealmEntity realm;
-
-    @Id
-    @Column(name = "TYPE")
-    protected String type;
+    private Key key = new Key();
+//    @Id
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "REALM_ID")
+//    protected RealmEntity realm;
+//
+//    @Id
+//    @Column(name = "TYPE")
+//    protected String type;
     @Column(name = "INPUT", nullable = false)
     protected boolean input;
     @Column(name = "SECRET", nullable = false)
@@ -51,20 +53,20 @@ public class RequiredCredentialEntity {
     @Column(name = "FORM_LABEL")
     protected String formLabel;
 
-    public RealmEntity getRealm() {
-        return realm;
+    public Key getKey() {
+        return key;
     }
 
     public void setRealm(RealmEntity realm) {
-        this.realm = realm;
+        this.key.setRealm(realm);
     }
 
     public String getType() {
-        return type;
+        return key.type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.key.setType(type);
     }
 
     public boolean isInput() {
@@ -93,24 +95,28 @@ public class RequiredCredentialEntity {
 
     public static class Key implements Serializable {
 
-        protected RealmEntity realm;
+        @Column(name="REALM_ID", length = 36)
+        private String realmId;
 
-        protected String type;
+        private String type;
 
         public Key() {
         }
 
-        public Key(RealmEntity realm, String type) {
-            this.realm = realm;
-            this.type = type;
+        public String getRealmId() {
+            return this.realmId;
         }
 
-        public RealmEntity getRealm() {
-            return realm;
+        public void setRealm(RealmEntity realm) {
+            this.realmId = realm.id;
         }
 
         public String getType() {
             return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         @Override
@@ -120,7 +126,7 @@ public class RequiredCredentialEntity {
 
             Key key = (Key) o;
 
-            if (realm != null ? !realm.getId().equals(key.realm != null ? key.realm.getId() : null) : key.realm != null) return false;
+            if (realmId != null ? !realmId.equals(key.realmId) : key.realmId != null) return false;
             if (type != null ? !type.equals(key.type) : key.type != null) return false;
 
             return true;
@@ -128,7 +134,7 @@ public class RequiredCredentialEntity {
 
         @Override
         public int hashCode() {
-            int result = realm != null ? realm.getId().hashCode() : 0;
+            int result = realmId != null ? realmId.hashCode() : 0;
             result = 31 * result + (type != null ? type.hashCode() : 0);
             return result;
         }
@@ -142,17 +148,12 @@ public class RequiredCredentialEntity {
 
         RequiredCredentialEntity key = (RequiredCredentialEntity) o;
 
-        if (realm != null ? !realm.getId().equals(key.realm != null ? key.realm.getId() : null) : key.realm != null) return false;
-        if (type != null ? !type.equals(key.type) : key.type != null) return false;
-
-        return true;
+        return this.key.equals(key.key);
     }
 
     @Override
     public int hashCode() {
-        int result = realm != null ? realm.getId().hashCode() : 0;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        return result;
+        return key.hashCode();
     }
 
 

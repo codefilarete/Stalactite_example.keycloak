@@ -34,52 +34,56 @@ import org.hibernate.annotations.Nationalized;
 import org.keycloak.models.jpa.converter.MapStringConverter;
 
 @Entity
-@IdClass(RealmLocalizationTextsEntity.RealmLocalizationTextEntityKey.class)
+//@IdClass(RealmLocalizationTextsEntity.RealmLocalizationTextEntityKey.class)
 @Table(name = "REALM_LOCALIZATIONS")
 public class RealmLocalizationTextsEntity {
-    static public class RealmLocalizationTextEntityKey implements Serializable {
-        private RealmEntity realm;
-        private String locale;
+//    static public class RealmLocalizationTextEntityKey implements Serializable {
+//        private RealmEntity realm;
+//        private String locale;
+//
+//        public RealmEntity getRealm() {
+//            return realm;
+//        }
+//
+//        public void setRealm(RealmEntity realm) {
+//            this.realm = realm;
+//        }
+//
+//        public String getLocale() {
+//            return locale;
+//        }
+//
+//        public void setLocale(String locale) {
+//            this.locale = locale;
+//        }
+//
+//        @Override
+//        public boolean equals(Object o) {
+//            if (this == o) return true;
+//            if (o == null || getClass() != o.getClass()) return false;
+//            RealmLocalizationTextEntityKey that = (RealmLocalizationTextEntityKey) o;
+//            return Objects.equals(realm, that.realm) &&
+//                    Objects.equals(locale, that.locale);
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return Objects.hash(realm, locale);
+//        }
+//    }
 
-        public RealmEntity getRealm() {
-            return realm;
-        }
-
-        public void setRealm(RealmEntity realm) {
-            this.realm = realm;
-        }
-
-        public String getLocale() {
-            return locale;
-        }
-
-        public void setLocale(String locale) {
-            this.locale = locale;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            RealmLocalizationTextEntityKey that = (RealmLocalizationTextEntityKey) o;
-            return Objects.equals(realm, that.realm) &&
-                    Objects.equals(locale, that.locale);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(realm, locale);
-        }
-    }
-
-    @Id
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "REALM_ID")
-    private RealmEntity realm;
-
-    @Id
-    @Column(name = "LOCALE")
-    private String locale;
+//    @Id
+//    @ManyToOne(fetch= FetchType.LAZY)
+//    @JoinColumn(name = "REALM_ID")
+//    private RealmEntity realm;
+	
+//    @Id
+//	@Column(name="REALM_ID", length = 36)
+//    private String realmId;
+//
+//    @Id
+//    @Column(name = "LOCALE")
+//    private String locale;
 
     @Nationalized
     @Column(name = "TEXTS", columnDefinition = "TEXT", nullable = false) // can't set it to CLOB as in Liquibase scripts, because Liquibase converts it to TEXT (see ClobType)
@@ -94,43 +98,48 @@ public class RealmLocalizationTextsEntity {
         this.texts = texts;
     }
 
-    public String getLocale() {
-        return locale;
-    }
+//    public String getLocale() {
+//        return locale;
+//    }
+//
+//    public void setLocale(String locale) {
+//        this.locale = locale;
+//    }
 
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public RealmEntity getRealm() {
-        return realm;
-    }
-
-    public void setRealm(RealmEntity realm) {
-        this.realm = realm;
+//    public RealmEntity getRealm() {
+//        return realm;
+//    }
+	
+	
+//	public String getRealmId() {
+//		return realmId;
+//	}
+	
+	public void setRealm(RealmEntity realm) {
+//        this.realmId = realm.getId();
     }
 
     @Override
     public String toString() {
         return "LocalizationTextEntity{" +
                 "text='" + texts + '\'' +
-                ", locale='" + locale + '\'' +
-                ", realm='" + realm + '\'' +
+//                ", locale='" + locale + '\'' +
+//                ", realm='" + realmId + '\'' +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RealmLocalizationTextsEntity that = (RealmLocalizationTextsEntity) o;
-        return Objects.equals(realm, that.realm) &&
-                Objects.equals(locale, that.locale) &&
-                Objects.equals(texts, that.texts);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(realm, locale, texts);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        RealmLocalizationTextsEntity that = (RealmLocalizationTextsEntity) o;
+//        return Objects.equals(realm, that.realm) &&
+//                Objects.equals(locale, that.locale) &&
+//                Objects.equals(texts, that.texts);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(realm, locale, texts);
+//    }
 }

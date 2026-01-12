@@ -2226,8 +2226,8 @@ public class RealmAdapter implements StorageProviderRealmModel, JpaModel<RealmEn
         }
         else {
             RealmLocalizationTextsEntity realmLocalizationTextsEntity = new RealmLocalizationTextsEntity();
-            realmLocalizationTextsEntity.setRealm(realm);
-            realmLocalizationTextsEntity.setLocale(locale);
+//            realmLocalizationTextsEntity.setRealm(realm);
+//            realmLocalizationTextsEntity.setLocale(locale);
             realmLocalizationTextsEntity.setTexts(localizationTexts);
 
             em.persist(realmLocalizationTextsEntity);
@@ -2249,7 +2249,7 @@ public class RealmAdapter implements StorageProviderRealmModel, JpaModel<RealmEn
     public Map<String, Map<String, String>> getRealmLocalizationTexts() {
         Map<String, Map<String, String>> localizationTexts = new HashMap<>();
         realm.getRealmLocalizationTexts().forEach((locale, localizationTextsEntity) -> {
-            localizationTexts.put(localizationTextsEntity.getLocale(), localizationTextsEntity.getTexts());
+            localizationTexts.put(locale, localizationTextsEntity.getTexts());
         });
         return localizationTexts;
     }

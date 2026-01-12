@@ -240,7 +240,7 @@ public class JpaEventStoreProvider implements EventStoreProvider {
                         logger.warnf("Unable to parse value '%s' for attribute '%s' in realm '%s' (expecting it to be decimal numeric)",
                                 attribute.getValue(),
                                 RealmAttributes.ADMIN_EVENTS_EXPIRATION,
-                                attribute.getRealm().getId(),
+                                attribute.getRealmId(),
                                 ex);
                         return false;
                     }
@@ -249,7 +249,7 @@ public class JpaEventStoreProvider implements EventStoreProvider {
 
         long current = Time.currentTimeMillis();
         realms.forEach((key, value) -> {
-            List<String> realmIds = value.stream().map(RealmAttributeEntity::getRealm).map(RealmEntity::getId).collect(Collectors.toList());
+            List<String> realmIds = value.stream().map(RealmAttributeEntity::getRealmId).collect(Collectors.toList());
             int currentNumDeleted = em.createQuery("delete from AdminEventEntity where realmId in :realmIds and time < :eventTime")
                     .setParameter("realmIds", realmIds)
                     .setParameter("eventTime", current - (key * 1000))

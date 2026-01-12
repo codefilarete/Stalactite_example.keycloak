@@ -1451,10 +1451,13 @@ public class JpaRealmProvider implements RealmProvider, ClientProvider, ClientSc
     }
 
     private RealmLocalizationTextsEntity getRealmLocalizationTextsEntity(String locale, String realmId) {
-        RealmLocalizationTextsEntity.RealmLocalizationTextEntityKey key = new RealmLocalizationTextsEntity.RealmLocalizationTextEntityKey();
-        key.setRealm(em.getReference(RealmEntity.class, realmId));
-        key.setLocale(locale);
-        return em.find(RealmLocalizationTextsEntity.class, key);
+		RealmEntity aggregate = em.getReference(RealmEntity.class, realmId);
+		return aggregate.getRealmLocalizationTexts().get(locale);
+//
+//        RealmLocalizationTextsEntity.RealmLocalizationTextEntityKey key = new RealmLocalizationTextsEntity.RealmLocalizationTextEntityKey();
+//        key.setRealm(em.getReference(RealmEntity.class, realmId));
+//        key.setLocale(locale);
+//        return em.find(RealmLocalizationTextsEntity.class, key);
     }
 
     @Override
@@ -1472,24 +1475,33 @@ public class JpaRealmProvider implements RealmProvider, ClientProvider, ClientSc
 
     @Override
     public void saveLocalizationText(RealmModel realm, String locale, String key, String text) {
-        RealmLocalizationTextsEntity entity = getRealmLocalizationTextsEntity(locale, realm.getId());
-        if(entity == null) {
-            entity = new RealmLocalizationTextsEntity();
-            entity.setRealm(em.getReference(RealmEntity.class, realm.getId()));
-            entity.setLocale(locale);
-            entity.setTexts(new HashMap<>());
-        }
-        entity.getTexts().put(key, text);
-        em.persist(entity);
+		RealmEntity aggregate = em.getReference(RealmEntity.class, realm.getId());
+		aggregate.getRealmLocalizationTexts().computeIfAbsent(locale, k -> new RealmLocalizationTextsEntity())
+				.getTexts().put(key, text);
+		em.persist(aggregate);
+//		RealmLocalizationTextsEntity entity = getRealmLocalizationTextsEntity(locale, realm.getId());
+//        if(entity == null) {
+//            entity = new RealmLocalizationTextsEntity();
+//            entity.setRealm(em.getReference(RealmEntity.class, realm.getId()));
+//            entity.setLocale(locale);
+//            entity.setTexts(new HashMap<>());
+//        }
+//        entity.getTexts().put(key, text);
+//        em.persist(entity);
     }
 
     @Override
     public void saveLocalizationTexts(RealmModel realm, String locale, Map<String, String> localizationTexts) {
-        RealmLocalizationTextsEntity entity = new RealmLocalizationTextsEntity();
-        entity.setTexts(localizationTexts);
-        entity.setLocale(locale);
-        entity.setRealm(em.getReference(RealmEntity.class, realm.getId()));
-        em.merge(entity);
+		RealmEntity aggregate = em.getReference(RealmEntity.class, realm.getId());
+		aggregate.getRealmLocalizationTexts().computeIfAbsent(locale, k -> new RealmLocalizationTextsEntity())
+				.setTexts(localizationTexts);
+		em.merge(aggregate);
+//
+//        RealmLocalizationTextsEntity entity = new RealmLocalizationTextsEntity();
+//        entity.setTexts(localizationTexts);
+//        entity.setLocale(locale);
+//        entity.setRealm(em.getReference(RealmEntity.class, realm.getId()));
+//        em.merge(entity);
     }
 
     @Override
