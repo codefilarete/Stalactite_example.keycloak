@@ -143,10 +143,12 @@ public class RealmEntity {
     @Column(name="EMAIL_THEME")
     protected String emailTheme;
 
-    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "realm", fetch = FetchType.EAGER)
+    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name="REALM_ID")
     Collection<RealmAttributeEntity> attributes = new LinkedList<>();
 
-    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "realm")
+    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name="REALM_ID")
     Collection<RequiredCredentialEntity> requiredCredentials = new LinkedList<>();
 
     @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "realm")
@@ -244,8 +246,9 @@ public class RealmEntity {
     @Column(name="ALLOW_USER_MANAGED_ACCESS", nullable = false)
     private boolean allowUserManagedAccess;
 
-    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "realm")
-    @MapKey(name="locale")
+    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true)
+    @MapKey(name="key.locale")
+    @JoinColumn(name="REALM_ID")
     Map<String, RealmLocalizationTextsEntity> realmLocalizationTexts = new HashMap<>();
 
     public String getId() {

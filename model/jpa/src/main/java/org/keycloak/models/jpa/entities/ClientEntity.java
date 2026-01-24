@@ -108,7 +108,8 @@ public class ClientEntity {
     @CollectionTable(name = "REDIRECT_URIS", joinColumns={ @JoinColumn(name="CLIENT_ID") }, indexes = @Index(name = "IDX_REDIR_URI_CLIENT", columnList = "CLIENT_ID"))
     protected Set<String> redirectUris;
 
-    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "client")
+    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name="CLIENT_ID")
     protected Collection<ClientAttributeEntity> attributes = new LinkedList<>();
 
     @ElementCollection

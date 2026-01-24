@@ -75,7 +75,8 @@ public class ClientScopeEntity {
     @Column(name="PROTOCOL")
     private String protocol;
 
-    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "clientScope")
+    @OneToMany(cascade ={CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name="SCOPE_ID")
     protected Collection<ClientScopeAttributeEntity> attributes = new LinkedList<>();
 
     @ElementCollection

@@ -18,13 +18,10 @@
 package org.keycloak.models.jpa.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -35,13 +32,13 @@ import java.io.Serializable;
  * @version $Revision: 1 $
  */
 @NamedQueries({
-        @NamedQuery(name= "findFederatedIdentityByUser", query="select link from FederatedIdentityEntity link where link.user = :user"),
-        @NamedQuery(name= "findFederatedIdentityByUserAndProvider", query="select link from FederatedIdentityEntity link where link.user = :user and link.identityProvider = :identityProvider"),
-        @NamedQuery(name= "findUserByFederatedIdentityAndRealm", query="select link.user from FederatedIdentityEntity link where link.realmId = :realmId and link.identityProvider = :identityProvider and link.userId = :userId"),
-        @NamedQuery(name= "deleteFederatedIdentityByRealm", query="delete from FederatedIdentityEntity social where social.user IN (select u from UserEntity u where realmId=:realmId)"),
-        @NamedQuery(name= "deleteFederatedIdentityByProvider", query="delete from FederatedIdentityEntity fdi where fdi.realmId = :realmId and fdi.identityProvider = :providerAlias "),
-        @NamedQuery(name= "deleteFederatedIdentityByRealmAndLink", query="delete from FederatedIdentityEntity social where social.user IN (select u from UserEntity u where realmId=:realmId and u.federationLink=:link)"),
-        @NamedQuery(name= "deleteFederatedIdentityByUser", query="delete from FederatedIdentityEntity social where social.user = :user")
+        @NamedQuery(name= "findFederatedIdentityByUser", query="select link from FederatedIdentityEntity link where link.key.userId = :user"),
+        @NamedQuery(name= "findFederatedIdentityByUserAndProvider", query="select link from FederatedIdentityEntity link where link.key.userId = :user and link.key.identityProvider = :identityProvider"),
+        @NamedQuery(name= "findUserByFederatedIdentityAndRealm", query="select u from UserEntity u where u.id = (select link.key.userId from FederatedIdentityEntity link where link.realmId = :realmId and link.key.identityProvider = :identityProvider and link.userId = :userId)"),
+        @NamedQuery(name= "deleteFederatedIdentityByRealm", query="delete from FederatedIdentityEntity social where social.key.userId IN (select u.id from UserEntity u where realmId=:realmId)"),
+        @NamedQuery(name= "deleteFederatedIdentityByProvider", query="delete from FederatedIdentityEntity fdi where fdi.realmId = :realmId and fdi.key.identityProvider = :providerAlias "),
+        @NamedQuery(name= "deleteFederatedIdentityByRealmAndLink", query="delete from FederatedIdentityEntity social where social.key.userId IN (select u.id from UserEntity u where realmId=:realmId and u.federationLink=:link)"),
+        @NamedQuery(name= "deleteFederatedIdentityByUser", query="delete from FederatedIdentityEntity social where social.key.userId = :user")
 })
 @Table(name="FEDERATED_IDENTITY",
         indexes = {
@@ -50,27 +47,18 @@ import java.io.Serializable;
         }
 )
 @Entity
-@IdClass(FederatedIdentityEntity.Key.class)
 public class FederatedIdentityEntity {
 
-	@Id
+	@EmbeddedId
 	private FederatedIdentityEntity.Key key;
 	
 	public FederatedIdentityEntity.Key getKey() {
 		return key;
 	}
 	
-//    @Id
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "USER_ID")
-//    private UserEntity user;
-
     @Column(name = "REALM_ID", length = 36)
     protected String realmId;
 
-//    @Id
-    @Column(name = "IDENTITY_PROVIDER")
-    protected String identityProvider;
     @Column(name = "FEDERATED_USER_ID")
     protected String userId;
     @Column(name = "FEDERATED_USERNAME")
@@ -79,20 +67,16 @@ public class FederatedIdentityEntity {
     @Column(name = "TOKEN", columnDefinition = "TEXT")
     protected String token;
 
-//    public UserEntity getUser() {
-//        return user;
-//    }
-
     public void setUser(UserEntity user) {
         this.key.userId = user.getId();
     }
 
     public String getIdentityProvider() {
-        return identityProvider;
+        return key.identityProvider;
     }
 
     public void setIdentityProvider(String identityProvider) {
-        this.identityProvider = identityProvider;
+        this.key.identityProvider = identityProvider;
     }
 
     public String getUserId() {
@@ -127,12 +111,12 @@ public class FederatedIdentityEntity {
         return token;
     }
 
+	@Embeddable
     public static class Key implements Serializable {
 		
-		@Column(name = "FEDERATED_USER_ID")
+		@Column(name = "USER_ID", length = 36)
         protected String userId;
-//        protected UserEntity user;
-		
+
 		@Column(name = "IDENTITY_PROVIDER")
         protected String identityProvider;
 

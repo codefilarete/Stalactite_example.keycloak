@@ -18,6 +18,7 @@
 package org.keycloak.models.jpa.entities;
 
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -115,9 +116,10 @@ public class UserEntity {
     @BatchSize(size = 20)
     protected Collection<CredentialEntity> credentials = new LinkedList<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy="user")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 20)
+    @JoinColumn(name="USER_ID")
     protected Collection<FederatedIdentityEntity> federatedIdentities = new LinkedList<>();
 
     @Column(name="FEDERATION_LINK")

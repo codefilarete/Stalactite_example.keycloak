@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.codefilarete.stalactite.dsl.entity.FluentEntityMappingBuilder;
 import org.codefilarete.stalactite.dsl.idpolicy.IdentifierPolicy;
+import org.codefilarete.stalactite.dsl.naming.ForeignKeyNamingStrategy;
 import org.codefilarete.stalactite.engine.PersistenceContext;
 import org.codefilarete.stalactite.sql.ddl.Length;
 import org.codefilarete.stalactite.sql.ddl.Size;
@@ -11,6 +12,7 @@ import org.keycloak.models.jpa.entities.ClientAttributeEntity;
 import org.keycloak.models.jpa.entities.ClientEntity;
 import org.keycloak.models.jpa.entities.ProtocolMapperEntity;
 
+import static org.codefilarete.stalactite.dsl.MappingEase.compositeKeyBuilder;
 import static org.codefilarete.stalactite.dsl.MappingEase.embeddableBuilder;
 import static org.codefilarete.stalactite.dsl.MappingEase.entityBuilder;
 
@@ -23,7 +25,8 @@ public class ClientEntityPersistenceConfiguration {
 		FluentEntityMappingBuilder<ClientEntity, String> result = entityBuilder(ClientEntity.class, String.class)
 				.mapKey(ClientEntity::getId, IdentifierPolicy.<ClientEntity, String>alreadyAssigned(o -> {}, Objects::isNull)).columnSize(UUID_LENGTH)
 				.onTable("CLIENT")
-				.map(ClientEntity::getName)
+                .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
+                .map(ClientEntity::getName)
 				.map(ClientEntity::getDescription)
 				.map(ClientEntity::getClientId).columnName("CLIENT_ID")
 				.map(ClientEntity::isEnabled)
@@ -45,15 +48,18 @@ public class ClientEntityPersistenceConfiguration {
 					.onTable("REDIRECT_URIS")
 					.elementColumnName("VALUE")
 					.reverseJoinColumn("CLIENT_ID")
-				.mapCollection(ClientEntity::getAttributes, ClientAttributeEntity.class, embeddableBuilder(ClientAttributeEntity.class)
-						.map(ClientAttributeEntity::getName).mandatory()
-						.map(ClientAttributeEntity::getValue))
-					.onTable("CLIENT_ATTRIBUTES")
-					.reverseJoinColumn("CLIENT_ID")
+				.mapOneToMany(ClientEntity::getAttributes, entityBuilder(ClientAttributeEntity.class, ClientAttributeEntity.Key.class)
+						.mapCompositeKey(ClientAttributeEntity::getKey, compositeKeyBuilder(ClientAttributeEntity.Key.class)
+                                .map(ClientAttributeEntity.Key::getClientId).columnName("CLIENT_ID").columnSize(UUID_LENGTH)
+                                .map(ClientAttributeEntity.Key::getName).columnName("NAME"),
+                                o -> {}, Objects::isNull)
+						.map(ClientAttributeEntity::getValue).columnName("VALUE").nullable()
+                        .onTable("CLIENT_ATTRIBUTES")
+                ).reverseJoinColumn("CLIENT_ID")
 				.mapMap(ClientEntity::getAuthFlowBindings, String.class, String.class)
 					.onTable("CLIENT_AUTH_FLOW_BINDINGS")
 					.keyColumn("BINDING_NAME")
-					.valueColumn("FLOW_ID").valueSize(UUID_LENGTH)
+					.valueColumn("FLOW_ID").valueSize(Size.length(4000))
 					.reverseJoinColumn("CLIENT_ID")
 				.mapOneToMany(ClientEntity::getProtocolMappers, ProtocolMapperPersistenceConfiguration.buildEntityMapping())
 					// We don't map ProtocolMapperEntity::getClientScope as a reverse relation because it's not in the ClientEntity aggregate

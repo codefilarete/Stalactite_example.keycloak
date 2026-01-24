@@ -18,12 +18,9 @@
 package org.keycloak.models.jpa.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 
@@ -33,19 +30,10 @@ import java.io.Serializable;
  */
 @Table(name="REALM_REQUIRED_CREDENTIAL")
 @Entity
-@IdClass(RequiredCredentialEntity.Key.class)
 public class RequiredCredentialEntity {
 
-    @Id
+    @EmbeddedId
     private Key key = new Key();
-//    @Id
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "REALM_ID")
-//    protected RealmEntity realm;
-//
-//    @Id
-//    @Column(name = "TYPE")
-//    protected String type;
     @Column(name = "INPUT", nullable = false)
     protected boolean input;
     @Column(name = "SECRET", nullable = false)
@@ -93,6 +81,7 @@ public class RequiredCredentialEntity {
         this.formLabel = formLabel;
     }
 
+    @Embeddable
     public static class Key implements Serializable {
 
         @Column(name="REALM_ID", length = 36)
@@ -144,11 +133,9 @@ public class RequiredCredentialEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (!(o instanceof RequiredCredentialEntity)) return false;
+        if (!(o instanceof RequiredCredentialEntity that)) return false;
 
-        RequiredCredentialEntity key = (RequiredCredentialEntity) o;
-
-        return this.key.equals(key.key);
+        return this.key.equals(that.key);
     }
 
     @Override

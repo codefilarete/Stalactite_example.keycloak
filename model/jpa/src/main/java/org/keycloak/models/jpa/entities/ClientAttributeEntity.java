@@ -18,15 +18,13 @@
 package org.keycloak.models.jpa.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import org.hibernate.annotations.Nationalized;
@@ -43,36 +41,29 @@ import org.hibernate.annotations.Nationalized;
 		}
 )
 @Entity
-@IdClass(ClientAttributeEntity.Key.class)
 public class ClientAttributeEntity {
 
-    @Id
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "CLIENT_ID")
-    protected ClientEntity client;
-
-    @Id
-    @Column(name="NAME")
-    protected String name;
+	@EmbeddedId
+	protected ClientAttributeEntity.Key key = new Key();
 
     @Nationalized
     @Column(name = "VALUE", columnDefinition = "TEXT")
     protected String value;
 
-    public ClientEntity getClient() {
-        return client;
+	public void getKey(Key key) {
+		this.key = key;
     }
 
     public void setClient(ClientEntity client) {
-        this.client = client;
+        this.key.clientId = client.getId();
     }
 
     public String getName() {
-        return name;
+        return key.name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.key.name = name;
     }
 
     public String getValue() {
@@ -84,22 +75,25 @@ public class ClientAttributeEntity {
     }
 
 
+	@Embeddable
     public static class Key implements Serializable {
 
-        protected ClientEntity client;
+		@Column(name = "CLIENT_ID", length = 36)
+        protected String clientId;
 
+		@Column(name = "NAME")
         protected String name;
 
         public Key() {
         }
 
         public Key(ClientEntity client, String name) {
-            this.client = client;
+            this.clientId = client.getId();
             this.name = name;
         }
 
-        public ClientEntity getClient() {
-            return client;
+        public String getClientId() {
+            return clientId;
         }
 
         public String getName() {
@@ -113,7 +107,7 @@ public class ClientAttributeEntity {
 
             ClientAttributeEntity.Key key = (ClientAttributeEntity.Key) o;
 
-            if (client != null ? !client.getId().equals(key.client != null ? key.client.getId() : null) : key.client != null) return false;
+            if (clientId != null ? !clientId.equals(key.clientId != null ? key.clientId : null) : key.clientId != null) return false;
             if (name != null ? !name.equals(key.name != null ? key.name : null) : key.name != null) return false;
 
             return true;
@@ -121,7 +115,7 @@ public class ClientAttributeEntity {
 
         @Override
         public int hashCode() {
-            int result = client != null ? client.getId().hashCode() : 0;
+            int result = clientId != null ? clientId.hashCode() : 0;
             result = 31 * result + (name != null ? name.hashCode() : 0);
             return result;
         }
@@ -131,21 +125,14 @@ public class ClientAttributeEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!(o instanceof ClientAttributeEntity)) return false;
+        if (o == null) return false;
+        if (!(o instanceof ClientAttributeEntity that)) return false;
 
-        ClientAttributeEntity key = (ClientAttributeEntity) o;
-
-        if (client != null ? !client.getId().equals(key.client != null ? key.client.getId() : null) : key.client != null) return false;
-        if (name != null ? !name.equals(key.name != null ? key.name : null) : key.name != null) return false;
-
-        return true;
+        return Objects.equals(key, that.key);
     }
 
     @Override
     public int hashCode() {
-        int result = client != null ? client.getId().hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return key.hashCode();
     }
 }

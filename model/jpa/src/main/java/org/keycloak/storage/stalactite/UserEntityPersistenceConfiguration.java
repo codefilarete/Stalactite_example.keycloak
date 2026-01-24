@@ -83,12 +83,13 @@ public class UserEntityPersistenceConfiguration {
 				.mapOneToMany(UserEntity::getFederatedIdentities, entityBuilder(FederatedIdentityEntity.class, FederatedIdentityEntity.Key.class)
 						.onTable("FEDERATED_IDENTITY")
 						.mapCompositeKey(FederatedIdentityEntity::getKey, compositeKeyBuilder(FederatedIdentityEntity.Key.class)
-								.map(Key::getUserId).columnName("FEDERATED_USER_ID").columnSize(UUID_LENGTH)
+								.map(Key::getUserId).columnName("USER_ID").columnSize(UUID_LENGTH)
 								.map(Key::getIdentityProvider).columnName("IDENTITY_PROVIDER"), o -> {}, Objects::isNull)
 						.map(FederatedIdentityEntity::getUserName).columnName("FEDERATED_USERNAME")
 						.map(FederatedIdentityEntity::getRealmId).columnName("REALM_ID").columnSize(UUID_LENGTH)
-						.map(FederatedIdentityEntity::getToken))
-				.reverseJoinColumn("FEDERATED_USER_ID"));
+						.map(FederatedIdentityEntity::getToken)
+						.map(FederatedIdentityEntity::getUserId).columnName("FEDERATED_USER_ID"))
+				.reverseJoinColumn("USER_ID"));
 		return result.getProvider();
 	}
 	

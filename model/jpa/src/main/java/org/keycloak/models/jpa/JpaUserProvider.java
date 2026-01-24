@@ -842,7 +842,7 @@ public class JpaUserProvider implements UserProvider, UserCredentialStore, JpaUs
     private FederatedIdentityEntity findFederatedIdentity(UserModel user, String identityProvider, LockModeType lockMode) {
         TypedQuery<FederatedIdentityEntity> query = em.createNamedQuery("findFederatedIdentityByUserAndProvider", FederatedIdentityEntity.class);
         UserEntity userEntity = em.getReference(UserEntity.class, user.getId());
-        query.setParameter("user", userEntity);
+        query.setParameter("userId", userEntity.getId());
         query.setParameter("identityProvider", identityProvider);
         query.setLockMode(lockMode);
         List<FederatedIdentityEntity> results = query.getResultList();
@@ -854,7 +854,7 @@ public class JpaUserProvider implements UserProvider, UserCredentialStore, JpaUs
     public Stream<FederatedIdentityModel> getFederatedIdentitiesStream(RealmModel realm, UserModel user) {
         TypedQuery<FederatedIdentityEntity> query = em.createNamedQuery("findFederatedIdentityByUser", FederatedIdentityEntity.class);
         UserEntity userEntity = em.getReference(UserEntity.class, user.getId());
-        query.setParameter("user", userEntity);
+        query.setParameter("userId", userEntity.getId());
 
         return closing(query.getResultStream().map(entity -> new FederatedIdentityModel(entity.getIdentityProvider(),
                 entity.getUserId(), entity.getUserName(), entity.getToken())).distinct());
