@@ -10,7 +10,7 @@ import org.keycloak.models.jpa.entities.ProtocolMapperEntity;
 
 import static org.codefilarete.stalactite.dsl.MappingEase.entityBuilder;
 
-public class ProtocolMapperPersistenceConfiguration {
+public class ProtocolMapperEntityPersistenceConfiguration {
 	
 	private static final Length UUID_LENGTH = Size.length(36);
 	

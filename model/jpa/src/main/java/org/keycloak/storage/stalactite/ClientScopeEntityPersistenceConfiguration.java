@@ -9,17 +9,14 @@ import org.codefilarete.stalactite.dsl.naming.ForeignKeyNamingStrategy;
 import org.codefilarete.stalactite.engine.PersistenceContext;
 import org.codefilarete.stalactite.sql.ddl.Length;
 import org.codefilarete.stalactite.sql.ddl.Size;
-import org.keycloak.models.jpa.entities.ClientAttributeEntity;
-import org.keycloak.models.jpa.entities.ClientEntity;
 import org.keycloak.models.jpa.entities.ClientScopeAttributeEntity;
 import org.keycloak.models.jpa.entities.ClientScopeEntity;
 import org.keycloak.models.jpa.entities.ProtocolMapperEntity;
 
 import static org.codefilarete.stalactite.dsl.MappingEase.compositeKeyBuilder;
-import static org.codefilarete.stalactite.dsl.MappingEase.embeddableBuilder;
 import static org.codefilarete.stalactite.dsl.MappingEase.entityBuilder;
 
-public class ClientScopePersistenceConfiguration {
+public class ClientScopeEntityPersistenceConfiguration {
 	
 	private static final Length UUID_LENGTH = Size.length(36);
 	
@@ -31,7 +28,7 @@ public class ClientScopePersistenceConfiguration {
 				.mapKey(ClientScopeEntity::getId, IdentifierPolicy.alreadyAssigned(O -> {}, Objects::isNull)).columnSize(UUID_LENGTH)
 				.map(ClientScopeEntity::getName)
 				.map(ClientScopeEntity::getDescription)
-				.mapOneToMany(ClientScopeEntity::getProtocolMappers, ProtocolMapperPersistenceConfiguration.buildEntityMapping())
+				.mapOneToMany(ClientScopeEntity::getProtocolMappers, ProtocolMapperEntityPersistenceConfiguration.buildEntityMapping())
 					// We don't map ProtocolMapperEntity::getClient as a reverse relation because it's not in the ClientScopeEntity aggregate
 					.mappedBy(ProtocolMapperEntity::getClientScope)
 					.reverseJoinColumn("CLIENT_SCOPE_ID")

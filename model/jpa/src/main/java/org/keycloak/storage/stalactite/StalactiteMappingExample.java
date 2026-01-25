@@ -64,7 +64,7 @@ public class StalactiteMappingExample {
         RealmEntityPersistenceConfiguration.initializePersistence(persistenceContext);
         UserEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 		ClientEntityPersistenceConfiguration.initializePersistence(persistenceContext);
-		ClientScopePersistenceConfiguration.initializePersistence(persistenceContext);
+		ClientScopeEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 		
 		Collection<Table<?>> tables = DDLDeployer.collectTables(persistenceContext);
 		CaseInsensitiveMap<Table<?>> tablePerName = Iterables.map(tables, Table::getName, () -> new CaseInsensitiveMap<>());

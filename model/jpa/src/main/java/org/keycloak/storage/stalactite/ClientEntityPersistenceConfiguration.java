@@ -13,7 +13,6 @@ import org.keycloak.models.jpa.entities.ClientEntity;
 import org.keycloak.models.jpa.entities.ProtocolMapperEntity;
 
 import static org.codefilarete.stalactite.dsl.MappingEase.compositeKeyBuilder;
-import static org.codefilarete.stalactite.dsl.MappingEase.embeddableBuilder;
 import static org.codefilarete.stalactite.dsl.MappingEase.entityBuilder;
 
 public class ClientEntityPersistenceConfiguration {
@@ -61,7 +60,7 @@ public class ClientEntityPersistenceConfiguration {
 					.keyColumn("BINDING_NAME")
 					.valueColumn("FLOW_ID").valueSize(Size.length(4000))
 					.reverseJoinColumn("CLIENT_ID")
-				.mapOneToMany(ClientEntity::getProtocolMappers, ProtocolMapperPersistenceConfiguration.buildEntityMapping())
+				.mapOneToMany(ClientEntity::getProtocolMappers, ProtocolMapperEntityPersistenceConfiguration.buildEntityMapping())
 					// We don't map ProtocolMapperEntity::getClientScope as a reverse relation because it's not in the ClientEntity aggregate
 					.mappedBy(ProtocolMapperEntity::getClient)
 					.reverseJoinColumn("CLIENT_ID")
