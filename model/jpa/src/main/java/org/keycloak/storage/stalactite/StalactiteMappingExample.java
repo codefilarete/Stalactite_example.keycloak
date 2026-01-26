@@ -65,7 +65,8 @@ public class StalactiteMappingExample {
         UserEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 		ClientEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 		ClientScopeEntityPersistenceConfiguration.initializePersistence(persistenceContext);
-		
+        ResourceEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+
 		Collection<Table<?>> tables = DDLDeployer.collectTables(persistenceContext);
 		CaseInsensitiveMap<Table<?>> tablePerName = Iterables.map(tables, Table::getName, () -> new CaseInsensitiveMap<>());
 		// Fixing column type that can't be fixed through DSL
