@@ -45,6 +45,7 @@ public class ResourceEntityPersistenceConfiguration {
                                 .map(ResourceServerEntity::getPolicyEnforcementMode).columnName("POLICY_ENFORCE_MODE").mandatory()
                                 .map(ResourceServerEntity::getDecisionStrategy).columnName("DECISION_STRATEGY").mandatory())
                         .columnName("RESOURCE_SERVER_ID")
+                        .mandatory()
                 )
                 .joinTable("RESOURCE_SCOPE")
                     .sourceJoinColumn("RESOURCE_ID")
@@ -56,6 +57,7 @@ public class ResourceEntityPersistenceConfiguration {
                         .map(ResourceAttributeEntity::getValue).columnName("VALUE")
                 )
                     .mappedBy(ResourceAttributeEntity::getResource)
+                    .mandatory()
                     .reverseJoinColumn("RESOURCE_ID")
                 ;
 
