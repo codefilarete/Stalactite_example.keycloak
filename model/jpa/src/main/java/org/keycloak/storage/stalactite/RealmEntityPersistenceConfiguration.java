@@ -33,6 +33,7 @@ import org.codefilarete.tool.function.Converter.NullAwareConverter;
 import org.keycloak.models.jpa.converter.MapStringConverter;
 import org.keycloak.models.jpa.entities.AuthenticationFlowEntity;
 import org.keycloak.models.jpa.entities.AuthenticatorConfigEntity;
+import org.keycloak.models.jpa.entities.ComponentConfigEntity;
 import org.keycloak.models.jpa.entities.ComponentEntity;
 import org.keycloak.models.jpa.entities.RealmAttributeEntity;
 import org.keycloak.models.jpa.entities.RealmAttributeEntity.Key;
@@ -213,6 +214,7 @@ public class RealmEntityPersistenceConfiguration {
 				.mapOneToMany(RealmEntity::getUserFederationProviders,
 						entityBuilder(UserFederationProviderEntity.class, String.class)
 								.onTable("USER_FEDERATION_PROVIDER")
+                                .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
 								.mapKey(UserFederationProviderEntity::getId, IdentifierPolicy.alreadyAssigned(e -> {}, Objects::nonNull)).columnSize(UUID_LENGTH)
 								.map(UserFederationProviderEntity::getProviderName).columnName("PROVIDER_NAME")
 								.map(UserFederationProviderEntity::getPriority).columnName("PRIORITY").nullable()
@@ -220,6 +222,11 @@ public class RealmEntityPersistenceConfiguration {
 								.map(UserFederationProviderEntity::getFullSyncPeriod).columnName("FULL_SYNC_PERIOD").nullable()
 								.map(UserFederationProviderEntity::getChangedSyncPeriod).columnName("CHANGED_SYNC_PERIOD").nullable()
 								.map(UserFederationProviderEntity::getLastSync).columnName("LAST_SYNC").nullable()
+								.mapMap(UserFederationProviderEntity::getConfig, String.class, String.class)
+                                    .onTable("USER_FEDERATION_CONFIG")
+                                    .reverseJoinColumn("USER_FEDERATION_PROVIDER_ID")
+                                    .keyColumn("NAME")
+                                    .valueColumn("VALUE")
 				)
 				.mappedBy(UserFederationProviderEntity::getRealm)
 				.reverseJoinColumn("REALM_ID")
@@ -228,9 +235,15 @@ public class RealmEntityPersistenceConfiguration {
 				.mapOneToMany(RealmEntity::getUserFederationMappers,
 						entityBuilder(UserFederationMapperEntity.class, String.class)
 								.onTable(userFederationMapperTable)
+                                .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
 								.mapKey(UserFederationMapperEntity::getId, IdentifierPolicy.alreadyAssigned(e -> {}, Objects::nonNull)).columnSize(UUID_LENGTH)
 								.map(UserFederationMapperEntity::getName).mandatory()
 								.map(UserFederationMapperEntity::getFederationMapperType).columnName("FEDERATION_MAPPER_TYPE").mandatory()
+                                .mapMap(UserFederationMapperEntity::getConfig, String.class, String.class)
+                                    .onTable("USER_FEDERATION_MAPPER_CONFIG")
+                                    .reverseJoinColumn("USER_FEDERATION_MAPPER_ID")
+                                    .keyColumn("NAME")
+                                    .valueColumn("VALUE")
 				)
 				.mappedBy(UserFederationMapperEntity::getRealm)
 				.reverseJoinColumn("REALM_ID")
@@ -276,13 +289,23 @@ public class RealmEntityPersistenceConfiguration {
 				.mapOneToMany(RealmEntity::getComponents,
 						entityBuilder(ComponentEntity.class, String.class)
 								.onTable("COMPONENT")
+                                .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
 								.mapKey(ComponentEntity::getId, IdentifierPolicy.alreadyAssigned(e -> {}, Objects::nonNull))
 								.columnSize(UUID_LENGTH)
 								.map(ComponentEntity::getName).columnName("NAME")
 								.map(ComponentEntity::getProviderType).columnName("PROVIDER_TYPE")
 								.map(ComponentEntity::getProviderId).columnName("PROVIDER_ID").columnSize(UUID_LENGTH)
 								.map(ComponentEntity::getParentId).columnName("PARENT_ID").columnSize(UUID_LENGTH)
-								.map(ComponentEntity::getSubType).columnName("SUB_TYPE"))
+								.map(ComponentEntity::getSubType).columnName("SUB_TYPE")
+								.mapOneToMany(ComponentEntity::getComponentConfigs, entityBuilder(ComponentConfigEntity.class, String.class)
+                                        .onTable("COMPONENT_CONFIG")
+                                        .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
+                                        .mapKey(ComponentConfigEntity::getId, IdentifierPolicy.alreadyAssigned(e -> {}, Objects::nonNull)).columnSize(UUID_LENGTH)
+                                        .map(ComponentConfigEntity::getName).columnName("NAME").mandatory()
+                                        .map(ComponentConfigEntity::getValue).columnName("VALUE"))
+                                    .mappedBy(ComponentConfigEntity::getComponent)
+                                    .reverseJoinColumn("COMPONENT_ID")
+                                    .mandatory())
 				.mappedBy(ComponentEntity::getRealm)
 				.reverseJoinColumn("REALM_ID")
 				.cascading(RelationMode.ALL_ORPHAN_REMOVAL)

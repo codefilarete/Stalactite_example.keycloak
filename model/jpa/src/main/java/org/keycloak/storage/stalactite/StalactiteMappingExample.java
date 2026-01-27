@@ -81,6 +81,7 @@ public class StalactiteMappingExample {
 		dialect.getSqlTypeRegistry().put(tablePerName.get("protocol_mapper_config").getColumn("value"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("resource_server_policy").getColumn("value"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("policy_config").getColumn("value"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("component_config").getColumn("value"), "TEXT");
 
         Table resourcePolicyTable = tablePerName.get("RESOURCE_POLICY");
         resourcePolicyTable.addIndex("IDX_RES_POLICY_POLICY", resourcePolicyTable.getColumn("POLICY_ID"));
