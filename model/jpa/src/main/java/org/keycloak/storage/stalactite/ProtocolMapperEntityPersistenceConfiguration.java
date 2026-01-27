@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.codefilarete.stalactite.dsl.entity.FluentEntityMappingBuilder;
 import org.codefilarete.stalactite.dsl.idpolicy.IdentifierPolicy;
+import org.codefilarete.stalactite.dsl.naming.ForeignKeyNamingStrategy;
 import org.codefilarete.stalactite.sql.ddl.Length;
 import org.codefilarete.stalactite.sql.ddl.Size;
 import org.keycloak.models.jpa.entities.ProtocolMapperEntity;
@@ -17,6 +18,7 @@ public class ProtocolMapperEntityPersistenceConfiguration {
 	public static FluentEntityMappingBuilder<ProtocolMapperEntity, String> buildEntityMapping() {
 		return entityBuilder(ProtocolMapperEntity.class, String.class)
 				.onTable("PROTOCOL_MAPPER")
+                .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
 				.mapKey(ProtocolMapperEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, Objects::isNull)).columnSize(UUID_LENGTH)
 				.map(ProtocolMapperEntity::getName).mandatory()
 				.map(ProtocolMapperEntity::getProtocol).mandatory()

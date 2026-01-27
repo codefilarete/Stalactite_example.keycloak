@@ -20,11 +20,9 @@ package org.keycloak.storage.stalactite;
 import java.util.Map;
 import java.util.Objects;
 
-import org.codefilarete.reflection.AccessorDefinition;
 import org.codefilarete.stalactite.dsl.entity.FluentEntityMappingBuilder;
 import org.codefilarete.stalactite.dsl.idpolicy.IdentifierPolicy;
 import org.codefilarete.stalactite.dsl.naming.ForeignKeyNamingStrategy;
-import org.codefilarete.stalactite.dsl.naming.IndexNamingStrategy;
 import org.codefilarete.stalactite.dsl.property.CascadeOptions.RelationMode;
 import org.codefilarete.stalactite.engine.PersistenceContext;
 import org.codefilarete.stalactite.sql.ddl.Length;

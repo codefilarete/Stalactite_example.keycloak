@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.codefilarete.stalactite.dsl.entity.EntityMappingConfigurationProvider.EntityMappingConfigurationProviderHolder;
 import org.codefilarete.stalactite.dsl.entity.FluentEntityMappingBuilder;
 import org.codefilarete.stalactite.dsl.idpolicy.IdentifierPolicy;
+import org.codefilarete.stalactite.dsl.naming.ForeignKeyNamingStrategy;
 import org.codefilarete.stalactite.engine.PersistenceContext;
 import org.codefilarete.stalactite.sql.ddl.Length;
 import org.codefilarete.stalactite.sql.ddl.Size;
@@ -27,7 +28,8 @@ public class UserEntityPersistenceConfiguration {
 		EntityMappingConfigurationProviderHolder<UserEntity, String> result = new EntityMappingConfigurationProviderHolder<>();
 		result.setProvider(entityBuilder(UserEntity.class, String.class)
 				.onTable("USER_ENTITY")
-				.mapKey(UserEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, Objects::isNull))
+                .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
+                .mapKey(UserEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, Objects::isNull))
 				.columnName("ID")
 				.columnSize(UUID_LENGTH)
 				.map(UserEntity::getUsername)
@@ -45,6 +47,7 @@ public class UserEntityPersistenceConfiguration {
 				
 				.mapOneToMany(UserEntity::getAttributes, entityBuilder(UserAttributeEntity.class, String.class)
 						.onTable("USER_ATTRIBUTE")
+                        .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
 						.mapKey(UserAttributeEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, Objects::isNull)).columnSize(UUID_LENGTH)
 						.map(UserAttributeEntity::getName).mandatory()
 						.map(UserAttributeEntity::getValue)
@@ -69,6 +72,7 @@ public class UserEntityPersistenceConfiguration {
 				
 				.mapOneToMany(UserEntity::getCredentials, entityBuilder(CredentialEntity.class, String.class)
 						.onTable("CREDENTIAL")
+                        .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
 						.mapKey(CredentialEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, Objects::isNull)).columnSize(UUID_LENGTH)
 						.map(CredentialEntity::getType)
 						.map("salt")
@@ -79,7 +83,7 @@ public class UserEntityPersistenceConfiguration {
 						.map(CredentialEntity::getPriority).nullable()
 						.versionedBy("version")
 				).mappedBy(CredentialEntity::getUser)
-				.reverseJoinColumn("user_id")
+				.reverseJoinColumn("USER_ID")
 				.mapOneToMany(UserEntity::getFederatedIdentities, entityBuilder(FederatedIdentityEntity.class, FederatedIdentityEntity.Key.class)
 						.onTable("FEDERATED_IDENTITY")
 						.mapCompositeKey(FederatedIdentityEntity::getKey, compositeKeyBuilder(FederatedIdentityEntity.Key.class)

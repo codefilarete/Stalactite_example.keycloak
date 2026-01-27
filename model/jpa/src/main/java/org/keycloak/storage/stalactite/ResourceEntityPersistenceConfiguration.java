@@ -34,6 +34,7 @@ public class ResourceEntityPersistenceConfiguration {
                 .map(ResourceEntity::getResourceServer).columnName("RESOURCE_SERVER_ID").mandatory().columnSize(UUID_LENGTH)
                 .mapOneToMany(ResourceEntity::getScopes, MappingEase.entityBuilder(ScopeEntity.class, String.class)
                         .onTable("RESOURCE_SERVER_SCOPE")
+                        .withForeignKeyNaming(ForeignKeyNamingStrategy.HIBERNATE_7)
                         .mapKey(ScopeEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, o -> true)).columnSize(UUID_LENGTH)
                         .map(ScopeEntity::getName).columnName("NAME").mandatory()
                         .map(ScopeEntity::getDisplayName).columnName("DISPLAY_NAME")
