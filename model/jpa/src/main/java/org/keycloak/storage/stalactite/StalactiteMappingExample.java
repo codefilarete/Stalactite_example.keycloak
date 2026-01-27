@@ -66,6 +66,7 @@ public class StalactiteMappingExample {
 		ClientEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 		ClientScopeEntityPersistenceConfiguration.initializePersistence(persistenceContext);
         ResourceEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+        PolicyEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 
 		Collection<Table<?>> tables = DDLDeployer.collectTables(persistenceContext);
 		CaseInsensitiveMap<Table<?>> tablePerName = Iterables.map(tables, Table::getName, () -> new CaseInsensitiveMap<>());
@@ -78,7 +79,15 @@ public class StalactiteMappingExample {
 		dialect.getSqlTypeRegistry().put(tablePerName.get("user_attribute").getColumn("long_value"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("client_attributes").getColumn("value"), "TEXT");
 		dialect.getSqlTypeRegistry().put(tablePerName.get("protocol_mapper_config").getColumn("value"), "TEXT");
-		
+		dialect.getSqlTypeRegistry().put(tablePerName.get("resource_server_policy").getColumn("value"), "TEXT");
+		dialect.getSqlTypeRegistry().put(tablePerName.get("policy_config").getColumn("value"), "TEXT");
+
+        Table resourcePolicyTable = tablePerName.get("RESOURCE_POLICY");
+        resourcePolicyTable.addIndex("IDX_RES_POLICY_POLICY", resourcePolicyTable.getColumn("POLICY_ID"));
+
+        Table scopePolicyTable = tablePerName.get("SCOPE_POLICY");
+        scopePolicyTable.addIndex("IDX_SCOPE_POLICY_POLICY", scopePolicyTable.getColumn("POLICY_ID"));
+
 		// Get the persister for RealmEntity
         this.realmPersister = persistenceContext.findPersister(RealmEntity.class);
     }

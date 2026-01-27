@@ -9,7 +9,6 @@ import org.codefilarete.stalactite.sql.ddl.Length;
 import org.codefilarete.stalactite.sql.ddl.Size;
 import org.keycloak.authorization.jpa.entities.ResourceAttributeEntity;
 import org.keycloak.authorization.jpa.entities.ResourceEntity;
-import org.keycloak.authorization.jpa.entities.ResourceServerEntity;
 import org.keycloak.authorization.jpa.entities.ScopeEntity;
 
 public class ResourceEntityPersistenceConfiguration {
@@ -39,12 +38,7 @@ public class ResourceEntityPersistenceConfiguration {
                         .map(ScopeEntity::getName).columnName("NAME").mandatory()
                         .map(ScopeEntity::getDisplayName).columnName("DISPLAY_NAME")
                         .map(ScopeEntity::getIconUri).columnName("ICON_URI")
-                        .mapManyToOne(ScopeEntity::getResourceServer, MappingEase.entityBuilder(ResourceServerEntity.class, String.class)
-                                .onTable("RESOURCE_SERVER")
-                                .mapKey(ResourceServerEntity::getId, IdentifierPolicy.alreadyAssigned(o -> {}, o -> true)).columnSize(UUID_LENGTH)
-                                .map(ResourceServerEntity::isAllowRemoteResourceManagement).columnName("ALLOW_RS_REMOTE_MGMT").mandatory()
-                                .map(ResourceServerEntity::getPolicyEnforcementMode).columnName("POLICY_ENFORCE_MODE").mandatory()
-                                .map(ResourceServerEntity::getDecisionStrategy).columnName("DECISION_STRATEGY").mandatory())
+                        .mapManyToOne(ScopeEntity::getResourceServer, ResourceServerEntityPersistenceConfiguration.buildEntityMapping())
                         .columnName("RESOURCE_SERVER_ID")
                         .mandatory()
                 )
