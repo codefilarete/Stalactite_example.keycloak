@@ -67,6 +67,7 @@ public class StalactiteMappingExample {
 		ClientScopeEntityPersistenceConfiguration.initializePersistence(persistenceContext);
         ResourceEntityPersistenceConfiguration.initializePersistence(persistenceContext);
         PolicyEntityPersistenceConfiguration.initializePersistence(persistenceContext);
+        RoleEntityPersistenceConfiguration.initializePersistence(persistenceContext);
 
 		Collection<Table<?>> tables = DDLDeployer.collectTables(persistenceContext);
 		CaseInsensitiveMap<Table<?>> tablePerName = Iterables.map(tables, Table::getName, () -> new CaseInsensitiveMap<>());
@@ -88,6 +89,10 @@ public class StalactiteMappingExample {
 
         Table scopePolicyTable = tablePerName.get("SCOPE_POLICY");
         scopePolicyTable.addIndex("IDX_SCOPE_POLICY_POLICY", scopePolicyTable.getColumn("POLICY_ID"));
+
+        Table keycloakRoleTable = tablePerName.get("KEYCLOAK_ROLE");
+        keycloakRoleTable.addUniqueConstraint("KEYCLOAK_ROLE_NAME_CLIENT_REALM_CONSTRAINT_KEY", keycloakRoleTable.getColumn("NAME"), keycloakRoleTable.getColumn("CLIENT_REALM_CONSTRAINT"));
+        keycloakRoleTable.addIndex("IDX_KEYCLOAK_ROLE_CLIENT", keycloakRoleTable.getColumn("CLIENT"));
 
 		// Get the persister for RealmEntity
         this.realmPersister = persistenceContext.findPersister(RealmEntity.class);
